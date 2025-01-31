@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!--还没有logo
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="448dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:scaleType="centerInside"
+        android:src="@drawable/logo" />
+    -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="初学阶段"
+        android:textSize="40sp"/>
+    <!-- 添加了一个空的 View 来作为图片和按钮之间的间隔 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="@string/func_1" />
+    <!-- 添加了一个空的 View 来作为图片和按钮之间的间隔 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="@string/func_2" />
+    <!-- 添加了一个空的 View 来作为图片和按钮之间的间隔 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="点我试试"/>
+
+</LinearLayout>

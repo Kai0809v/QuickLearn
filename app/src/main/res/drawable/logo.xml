@@ -1,0 +1,55 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 大圆（白色左半圆和黑色右半圆） -->
+    <item>
+        <shape
+            android:shape="oval">
+            <solid android:color="@android:color/white"/>
+            <size
+                android:width="400dp"/>  <!-- 大圆宽度 = 2 * R -->
+            android:height="400dp"/> <!-- 大圆高度 = 2 * R -->
+        </shape>
+    </item>
+
+    <!-- 黑色右半圆 -->
+    <item>
+        <shape
+            android:shape="oval">
+            <solid android:color="@android:color/black"/>
+            <size
+                android:width="200dp"/>  <!-- 半圆宽度 = R -->
+            android:height="400dp"/> <!-- 半圆高度 = 2 * R -->
+            <padding
+                android:left="200dp"/> <!-- 向右平移一个半径 -->
+        </shape>
+    </item>
+
+    <!-- 小白圆（左半圆，1/4位置） -->
+    <item
+        android:left="100dp"
+        android:right="100dp"
+        android:top="75dp"
+        android:bottom="75dp">
+        <shape
+            android:shape="oval">
+            <solid android:color="@android:color/white"/>
+            <size
+                android:width="100dp"/>  <!-- 小圆宽度 = R/2 -->
+            android:height="100dp"/> <!-- 小圆高度 = R/2 -->
+        </shape>
+    </item>
+
+    <!-- 小黑圆（右半圆，3/4位置） -->
+    <item
+        android:left="100dp"
+        android:right="100dp"
+        android:top="225dp"
+        android:bottom="225dp">
+        <shape
+            android:shape="oval">
+            <solid android:color="@android:color/black"/>
+            <size
+                android:width="100dp"/>  <!-- 小圆宽度 = R/2 -->
+            android:height="100dp"/> <!-- 小圆高度 = R/2 -->
+        </shape>
+    </item>
+</layer-list>
