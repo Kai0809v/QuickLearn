@@ -8,7 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class InfActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_AppCompat)
+        //setTheme(R.style.Theme_QuickLearn)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.infpage)

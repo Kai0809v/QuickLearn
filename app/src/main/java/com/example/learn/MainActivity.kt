@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
         val wenben = findViewById<TextView>(R.id.textView)
 
 
+        /******
         // 现在你可以对按钮进行操作，例如设置点击事件监听器
         myButton1.setOnClickListener {
             // 创建一个AlertDialog.Builder实例
@@ -49,6 +50,11 @@ class MainActivity : ComponentActivity() {
             // 按钮被点击时执行的代码
             //val intent = Intent(this, 待定活动页::class.java)
             //startActivity(intent)
+        }
+        ******/
+        myButton1.setOnClickListener {
+            val intent = Intent(this,history::class.java)
+            startActivity(intent)
         }
         myButton2.setOnClickListener {
             // 按钮被点击时执行的代码

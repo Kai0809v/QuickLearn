@@ -13,8 +13,11 @@
         android:theme="@style/Theme.QuickLearn"
         tools:targetApi="31">
         <activity
+            android:name=".history"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".InfActivity"
-
             android:exported="false" />
         <activity
             android:name=".MainActivity"
