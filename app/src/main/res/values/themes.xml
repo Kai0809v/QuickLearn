@@ -4,7 +4,9 @@
     <!---
     <style name="Theme.QuickLearn" parent="android:Theme.Material.Light.NoActionBar" />
     -->
-    <style name="Theme.QuickLearn" parent="Theme.MaterialComponents.Light.NoActionBar"/>
+    <style name="Theme.QuickLearn" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorAccent">#2196F3</item>
+    </style>
     <style name="Theme.AppCompat" parent="Theme.AppCompat.Light"/>
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
     </style>

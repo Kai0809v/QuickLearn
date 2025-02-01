@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
         val myButton1: Button = findViewById(R.id.button1)
         val myButton2: Button = findViewById(R.id.button2)
         val myButton3: Button = findViewById(R.id.button3)
+        val myButton4: Button = findViewById(R.id.button4)
         val wenben = findViewById<TextView>(R.id.textView)
 
 
@@ -72,6 +73,12 @@ class MainActivity : ComponentActivity() {
             println("按钮3被点击了")
 
         }
+        myButton4.setOnClickListener {
+            Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this,InfActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 

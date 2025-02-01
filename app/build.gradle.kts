@@ -60,5 +60,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("com.google.android.material:material:1.4.0")
+    //implementation("com.google.android.material:material:1.4.0")
+    //在gradle/libs.versions.toml 文件中给Material Design 的依赖项取了个别名，即material，
+    // 这样在build.gradle.kts 文件中就可以使用这个别名来引用Material Design 库了。在此页的第52行
 }
