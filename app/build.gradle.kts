@@ -61,4 +61,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation("com.google.android.material:material:1.4.0")
+    //Kotlin DSL（build.gradle.kts），添加依赖的方式会略有不同，比起groovy多一对括号
 }
