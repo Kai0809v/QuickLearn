@@ -13,7 +13,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tvNotificationTitle"
+            android:id="@+id/tvNotificationName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="通知应用"
@@ -34,7 +34,7 @@
             android:textColor="#333333"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvNotificationTitle" />
+            app:layout_constraintTop_toBottomOf="@id/tvNotificationName" />
 
         <TextView
             android:id="@+id/tvNotificationTime"

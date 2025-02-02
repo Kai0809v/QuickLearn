@@ -7,8 +7,10 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import android.provider.Settings
 
 class MainActivity : ComponentActivity() {
+    //在 Java和kotlin中，只要方法定义在同一个类中，方法定义的位置实际上不影响程序的正常运行。
 
     private var count = 0
     private val texts = arrayOf("你好", "世界", "你好世界")
@@ -17,7 +19,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.mainactivity)
+        // 调用引导用户授权的方法
+        requestNotificationAccess()
+
 
         //kotlin  使用 findViewById 查找按钮
         val myButton1: Button = findViewById(R.id.button1)
@@ -79,6 +85,36 @@ class MainActivity : ComponentActivity() {
             startActivity(intent)
         }
 
+    }
+    /**
+     * 引导用户授权通知访问权限
+     */
+    private fun requestNotificationAccess() {
+        // 检查权限是否已开启
+        if (!isNotificationServiceEnabled()) {
+            // 如果未开启，弹出对话框提示用户去设置页面开启
+            AlertDialog.Builder(this)
+                .setTitle("通知访问权限")
+                .setMessage("为了使用通知记录功能，请开启通知访问权限。")
+                .setPositiveButton("去开启") { _, _ ->
+                    // 跳转到通知访问权限设置页面
+                    val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+                    startActivity(intent)
+                }
+                .setNegativeButton("取消", null)
+                .show()
+        }else{
+            Toast.makeText(this, "通知访问权限已开启", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * 检查通知访问权限是否已开启
+     */
+    private fun isNotificationServiceEnabled(): Boolean {
+        val packageName = packageName
+        val flat = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
+        return flat != null && flat.contains(packageName)
     }
 
 
