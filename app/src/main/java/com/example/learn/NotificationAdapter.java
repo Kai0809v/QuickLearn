@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
-    
-    private List<Notification> notificationList;
 
-    public NotificationAdapter(List<Notification> notificationList) {
+    
+    private List<NotificationModel> notificationList;
+
+    public NotificationAdapter(List<NotificationModel> notificationList) {
         this.notificationList = notificationList;
     }
 
@@ -26,10 +27,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        Notification notification = notificationList.get(position);
-        holder.tvName.setText(notification.getAppName()); // 修改为 getAppName()
+        NotificationModel notification = notificationList.get(position);
+        holder.tvName.setText(notification.getAppName());
         holder.tvContent.setText(notification.getContent());
-        holder.tvTime.setText(notification.getTime());
+        holder.tvTime.setText(notification.getFormattedTime());
     }
 
     @Override
@@ -49,4 +50,5 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             tvTime = itemView.findViewById(R.id.tvNotificationTime);
         }
     }
+
 }
