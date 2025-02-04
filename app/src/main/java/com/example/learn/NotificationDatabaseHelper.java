@@ -5,16 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
-// NotificationDatabaseHelper.java
 public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "notifications.db";
     private static final int DB_VERSION = 2;// 数据库版本号
 
     // 创建表语句
+    //卡片对应信息的更改代表着对应数据库的更改，所以改完信息后，数据库也要更新，要么将软件数据清除重新生成数据库
     private static final String CREATE_TABLE =
             "CREATE TABLE notifications (" +
                     "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
