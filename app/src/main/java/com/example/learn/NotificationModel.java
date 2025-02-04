@@ -8,6 +8,7 @@ import java.util.Locale;
 public class NotificationModel {
     private String packageName;
     private String appName;
+    private String title;
     private String content;
     private long timestamp;
 
@@ -17,6 +18,8 @@ public class NotificationModel {
     public String getAppName() { return appName; }
     public void setAppName(String appName) { this.appName = appName; }
 
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 

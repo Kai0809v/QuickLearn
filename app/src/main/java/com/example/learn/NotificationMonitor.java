@@ -9,6 +9,8 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import java.util.ResourceBundle;
+
 public class NotificationMonitor extends NotificationListenerService {
     private static final String TAG = "NotificationMonitor";
     private NotificationDatabaseHelper dbHelper;
@@ -29,9 +31,14 @@ public class NotificationMonitor extends NotificationListenerService {
             // 获取应用名称
             String appName = getApplicationName(packageName);
 
+            //获取通知标题
+            Bundle extras = sbn.getNotification().extras;
+            String title = extras.getString(android.app.Notification.EXTRA_TITLE);
+            if (title == null) {title = "无标题";}
+
             // 获取通知内容
             String content = extractNotificationContent(sbn.getNotification());
-
+            if (content == null) {content = "无内容";}
             // 获取时间戳
             long timestamp = sbn.getPostTime();
 
@@ -39,6 +46,7 @@ public class NotificationMonitor extends NotificationListenerService {
             NotificationModel notification = new NotificationModel();
             notification.setAppName(appName);
             notification.setPackageName(packageName);
+            notification.setTitle(title);
             notification.setContent(content);
             notification.setTimestamp(timestamp);
 

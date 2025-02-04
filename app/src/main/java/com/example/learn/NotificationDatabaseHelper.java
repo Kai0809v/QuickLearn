@@ -20,6 +20,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
                     "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "package_name TEXT NOT NULL," +
                     "app_name TEXT NOT NULL," +
+                    "title TEXT," +
                     "content TEXT," +
                     "timestamp LONG NOT NULL);";
 
@@ -47,6 +48,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("package_name", notification.getPackageName());
         values.put("app_name", notification.getAppName());
+        values.put("title",notification.getTitle());
         values.put("content", notification.getContent());
         values.put("timestamp", notification.getTimestamp());
         return db.insert("notifications", null, values);
@@ -56,14 +58,15 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         List<NotificationModel> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("notifications",
-                new String[]{"app_name", "content", "timestamp"},
+                new String[]{"app_name","title","content", "timestamp"},
                 null, null, null, null, "timestamp DESC");
 
         while (cursor.moveToNext()) {
             NotificationModel item = new NotificationModel();
             item.setAppName(cursor.getString(0));
-            item.setContent(cursor.getString(1));
-            item.setTimestamp(cursor.getLong(2));
+            item.setTitle(cursor.getString(1));
+            item.setContent(cursor.getString(2));
+            item.setTimestamp(cursor.getLong(3));
             list.add(item);
         }
         cursor.close();
