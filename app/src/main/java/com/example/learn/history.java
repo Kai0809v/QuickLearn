@@ -3,6 +3,7 @@ package com.example.learn;
 import static java.sql.DriverManager.println;
 
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -41,16 +42,14 @@ public class history extends AppCompatActivity {
     private FloatingActionButton fabChild2;//对悬浮按钮的声明
     private boolean isFabOpen = false;
 
+    private NotificationDatabaseHelper dbHelper;
+
     private List<NotificationModel> notifications = new ArrayList<>();
     private NotificationAdapter adapter;
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
+    private final BroadcastReceiver updateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            NotificationModel notification = intent.getParcelableExtra("notification");
-            if (notification != null) {
-                notifications.add(notification);
-                adapter.notifyDataSetChanged();
-            }
+            loadNotifications();
         }
     };
 
@@ -58,17 +57,31 @@ public class history extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_history);
-
+        // 初始化 RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerViewNotifications);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new NotificationAdapter(notifications);
         recyclerView.setAdapter(adapter);
+        // 初始化数据库
+        dbHelper = new NotificationDatabaseHelper(this);
 
         // 注册广播接收器
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                receiver, new IntentFilter("com.example.learn.RECEIVE_NOTIFICATION"));
+        // 修改后（添加标志）：
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ 需要显式声明导出属性
+            registerReceiver(
+                    updateReceiver,
+                    new IntentFilter("NOTIFICATION_UPDATE"),
+                    Context.RECEIVER_NOT_EXPORTED // 限制为仅本应用可接收
+            );
+        } else {
+            // 旧版本无需标志
+            registerReceiver(updateReceiver, new IntentFilter("NOTIFICATION_UPDATE"));
+        }
 
+        // 首次加载数据
+        loadNotifications();
 
         // 悬浮按钮对应的代码
         //FloatingActionButton fabMain = findViewById(R.id.fab_main);
@@ -124,6 +137,15 @@ public class history extends AppCompatActivity {
                 .setDuration(300);
     }
 
+    private void loadNotifications() {
+        new Thread(() -> {
+            List<NotificationModel> data = dbHelper.getAllNotifications();
+            runOnUiThread(() -> {
+                adapter.setNotifications(data);
+                adapter.notifyDataSetChanged();
+            });
+        }).start();
+    }
     private void closeFabMenu() {
         // 子按钮向下收回动画
         fabMenu.animate()
@@ -143,7 +165,7 @@ public class history extends AppCompatActivity {
      */
     private void checkAndSendNotification() {
         if (hasNotificationPermission()) {
-            sendNotification("标题", "内容");
+            sendNotification("测试通知", "这是一则测试内容");
         } else {
             //showPermissionDialog();
             // 新增：检查是否被永久拒绝
@@ -302,7 +324,7 @@ public class history extends AppCompatActivity {
         @Override
         protected void onDestroy() {
             super.onDestroy();
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+            unregisterReceiver(updateReceiver);
         }
 
 

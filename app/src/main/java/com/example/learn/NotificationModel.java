@@ -11,7 +11,6 @@ public class NotificationModel {
     private String content;
     private long timestamp;
 
-    // Getter/Setter 方法
     public String getPackageName() { return packageName; }
     public void setPackageName(String packageName) { this.packageName = packageName; }
 

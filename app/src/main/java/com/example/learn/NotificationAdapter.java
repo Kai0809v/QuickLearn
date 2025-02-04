@@ -1,6 +1,7 @@
 package com.example.learn;
 
 
+import android.app.Notification;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
+
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
+
 
     
     private List<NotificationModel> notificationList;
+
+    public void setNotifications(List<NotificationModel> notifications) {
+        this.notificationList = notifications;
+    }
 
     public NotificationAdapter(List<NotificationModel> notificationList) {
         this.notificationList = notificationList;
