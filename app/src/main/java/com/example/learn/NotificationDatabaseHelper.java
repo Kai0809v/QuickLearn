@@ -28,6 +28,13 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
+    //删除旧数据
+    public void deleteAllNotifications() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("notifications", null, null); // 删除所有数据
+        db.close();
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);// 创建表

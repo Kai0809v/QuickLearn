@@ -11,14 +11,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-
-    <!-- 主按钮（FAB） -->
-
-    <!-- 子按钮 1 -->
-
-    <!-- 子按钮 2 -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNotifications"
         android:layout_width="match_parent"
@@ -54,8 +46,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="#2196F3"
+            android:layout_marginBottom="16dp"
             app:tint="@android:color/white"
             app:srcCompat="@drawable/history_clear"
+            app:elevation="6dp"/>
+
+        <!-- 子按钮3 -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_child3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="#2196F3"
+            android:layout_marginBottom="16dp"
+            app:tint="@android:color/white"
+            app:srcCompat="@drawable/history_filter"
+            app:elevation="6dp"/>
+
+        <!-- 子按钮4 -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_child4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="#2196F3"
+
+            app:tint="@android:color/white"
+            app:srcCompat="@drawable/logger_settings"
             app:elevation="6dp"/>
 
     </LinearLayout>

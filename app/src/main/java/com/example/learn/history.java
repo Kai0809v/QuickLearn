@@ -36,10 +36,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class history extends AppCompatActivity {
+    //***********    按钮声明区   *************************
     private LinearLayout fabMenu;
     private FloatingActionButton fabMain;
     private FloatingActionButton fabChild1;
     private FloatingActionButton fabChild2;//对悬浮按钮的声明
+    private FloatingActionButton fabChild3;
+    private FloatingActionButton fabChild4;
+
+    //*********************************************
     private boolean isFabOpen = false;
 
     private NotificationDatabaseHelper dbHelper;
@@ -51,7 +56,7 @@ public class history extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             loadNotifications();
         }
-    };
+    };//不知道这一段有没有用
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,24 +89,52 @@ public class history extends AppCompatActivity {
         loadNotifications();
 
         // 悬浮按钮对应的代码
-        //FloatingActionButton fabMain = findViewById(R.id.fab_main);
         fabMenu = findViewById(R.id.fab_menu);
         fabMain = findViewById(R.id.fab_main);
         fabChild1 = findViewById(R.id.fab_child1);
         fabChild2 = findViewById(R.id.fab_child2);
+        fabChild3 = findViewById(R.id.fab_child3);
+        fabChild4 = findViewById(R.id.fab_child4);
 
 
 
         fabMain.setOnClickListener(v -> toggleFab());
+
 
         fabChild1.setOnClickListener(v -> {
             Toast.makeText(history.this, "Child 1 clicked", Toast.LENGTH_SHORT).show();
             checkAndSendNotification();
         });
 
-        fabChild2.setOnClickListener(v -> Toast.makeText(history.this, "Child 2 clicked", Toast.LENGTH_SHORT).show());
+        fabChild2.setOnClickListener(v -> {
+            new AlertDialog.Builder(history.this)
+                    .setTitle("删除记录")
+                    .setMessage("确定删除所有历史记录吗？")
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        new Thread(() -> {
+                            dbHelper.deleteAllNotifications();
+                            runOnUiThread(() -> {
+                                loadNotifications();
+                                Toast.makeText(history.this, "已删除所有记录", Toast.LENGTH_SHORT).show();
+                            });
+                        }).start();
+                    })
+                    .setNegativeButton("取消", null)
+                    .show();
+        });
+        fabChild3.setOnClickListener(v -> {
+            Huabing();
+            //以后弄个筛选功能
+        });
+        fabChild4.setOnClickListener(v -> {
+            Huabing();
+            //以后弄个自定义
+        });
 
 
+    }
+    private void Huabing() {
+        Toast.makeText(history.this,"功能尚未实现", Toast.LENGTH_SHORT).show();
     }
 
     //触发状态转换
@@ -166,6 +199,8 @@ public class history extends AppCompatActivity {
     private void checkAndSendNotification() {
         if (hasNotificationPermission()) {
             sendNotification("测试通知", "这是一则测试内容");
+            loadNotifications();
+            println("按钮一");
         } else {
             //showPermissionDialog();
             // 新增：检查是否被永久拒绝

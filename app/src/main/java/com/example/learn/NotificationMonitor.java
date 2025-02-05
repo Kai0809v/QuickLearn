@@ -1,6 +1,5 @@
 package com.example.learn;
 
-import android.app.Notification;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -8,8 +7,6 @@ import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
-
-import java.util.ResourceBundle;
 
 public class NotificationMonitor extends NotificationListenerService {
     private static final String TAG = "NotificationMonitor";
