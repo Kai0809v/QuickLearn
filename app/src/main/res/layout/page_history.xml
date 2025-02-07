@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!-- 子按钮容器 -->
+    <!-- 子按钮容器 靠右下角分布，间距也是基于右下角的-->
     <LinearLayout
         android:id="@+id/fab_menu"
         android:layout_width="wrap_content"

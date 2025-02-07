@@ -102,10 +102,8 @@ public class history extends AppCompatActivity {
 
 
         fabChild1.setOnClickListener(v -> {
-            Toast.makeText(history.this, "Child 1 clicked", Toast.LENGTH_SHORT).show();
             checkAndSendNotification();
         });
-
         fabChild2.setOnClickListener(v -> {
             new AlertDialog.Builder(history.this)
                     .setTitle("删除记录")
@@ -152,10 +150,13 @@ public class history extends AppCompatActivity {
 
         // 计算子按钮总高度（包括间距）
         float totalHeight = 0;
-        for (int i = 0; i < fabMenu.getChildCount(); i++) {
-            View child = fabMenu.getChildAt(i);
-            totalHeight += child.getHeight() + ((LinearLayout.LayoutParams) child.getLayoutParams()).bottomMargin;
-        }
+//        for (int i = 0; i < fabMenu.getChildCount(); i++) {
+//            View child = fabMenu.getChildAt(i);
+//            totalHeight +=  + ((LinearLayout.LayoutParams) child.getLayoutParams()).bottomMargin;
+//        }
+        View child = fabMenu.getChildAt(1);
+        float jianJu = ((LinearLayout.LayoutParams) child.getLayoutParams()).bottomMargin;
+        totalHeight = child.getHeight()+jianJu;
 
         // 子按钮向上展开动画
         fabMenu.animate()
@@ -202,74 +203,25 @@ public class history extends AppCompatActivity {
             loadNotifications();
             println("按钮一");
         } else {
-            //showPermissionDialog();
-            // 新增：检查是否被永久拒绝
-            if (shouldShowRationale()) {
-                // 显示解释性对话框
-                showRationaleDialog();
-            } else {
-                // 直接跳转设置
-                showPermanentDeniedDialog();
-            }
+            showRationaleDialog();
+            //************
         }
-    }
-    /**
-     * 检查是否需要显示解释说明
-      */
-    private boolean shouldShowRationale() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    android.Manifest.permission.POST_NOTIFICATIONS
-            );
-        }
-        return false; // 低版本不需要动态权限
-    }
-    // 显示被永久拒绝后的引导对话框
-    private void showPermanentDeniedDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("权限被永久拒绝")
-                .setMessage("您已永久拒绝通知权限，请前往设置手动开启")
-                .setPositiveButton("去设置", (dialog, which) -> {
-                    // 跳转到应用详情页（更精确的权限设置入口）
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            .setData(Uri.parse("package:" + getPackageName()));
-                    startActivity(intent);
-                })
-                .setNegativeButton("取消", null)
-                .show();
     }
 
-    // 显示解释性对话框（第一次拒绝后的引导）
+    // 显示解释性对话框，拒绝后的引导
     private void showRationaleDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("需要通知权限")
-                .setMessage("发送通知用于提醒重要事件，请允许权限")
+                .setMessage("用于发送测试通知，请允许权限")
                 .setPositiveButton("继续授权", (dialog, which) -> {
                     // 再次请求权限
                     openNotificationSettings();
                 })
-                .setNegativeButton("拒绝", null)
+                .setNegativeButton("取消", null)
                 .show();
     }
-
     /**
-     * 检查通知权限状态
-     */
-    private boolean hasNotificationPermission() {
-        // Android 13 (API 33) 及以上需要动态权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED;
-        }
-        // 低版本默认有权限（需要检查系统通知设置）
-        return true;
-    }
-
-    /**
-     * 跳转到通知设置页面
+     * 13+动态申请，低的跳转到通知设置页面
      */
     private void openNotificationSettings() {
         Intent intent;
@@ -288,6 +240,39 @@ public class history extends AppCompatActivity {
         }
     }
 
+    // 显示被永久拒绝后的引导对话框
+    private void showPermanentDeniedDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("权限被永久拒绝")
+                .setMessage("您已永久拒绝通知权限，请前往设置手动开启")
+                .setPositiveButton("去设置", (dialog, which) -> {
+                    // 跳转到应用详情页（更精确的权限设置入口）
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            .setData(Uri.parse("package:" + getPackageName()));
+                    startActivity(intent);
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+
+
+    /**
+     * 检查通知权限状态
+     */
+    private boolean hasNotificationPermission() {
+        // Android 13 (API 33) 及以上需要动态权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED;
+        }
+        // 低版本默认有权限（需要检查系统通知设置）
+        return true;
+    }
+
+
     // 处理权限请求结果
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -300,10 +285,10 @@ public class history extends AppCompatActivity {
                 // 权限已授予，发送通知
                 sendNotification("标题", "内容");
             } else {
-                // 新增：检查是否永久拒绝
-                if (!shouldShowRationale()) {
+                // 展示解释性对话框
+
                     showPermanentDeniedDialog();
-                }
+
             }
         }
     }

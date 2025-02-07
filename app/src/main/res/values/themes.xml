@@ -6,15 +6,18 @@
     #00FFFFFF是白色的透明度为0的颜色
     <item name="android:windowFullscreen">true</item>
     全屏显示隐藏状态栏
-    <item name="android:windowIsTranslucent">true</item>
-    半透明状态栏
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    状态栏颜色透明
     -->
     <style name="Theme.QuickLearn" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorAccent">#2196F3</item>.
-        <item name="android:statusBarColor">#00FFFFFF</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="colorAccent">#2196F3</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
+
     <style name="Theme.AppCompat" parent="Theme.AppCompat.Light"/>
+
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>
