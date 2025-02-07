@@ -5,12 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "notifications.db";
     private static final int DB_VERSION = 2;// 数据库版本号
+    private final MutableLiveData<List<NotificationModel>> notificationsLiveData = new MutableLiveData<>();
 
     // 创建表语句
     //卡片对应信息的更改代表着对应数据库的更改，所以改完信息后，数据库也要更新，要么将软件数据清除重新生成数据库
@@ -40,13 +44,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
-            // 执行从版本1到版本2的迁移操作（如新增字段）
-            db.execSQL("ALTER TABLE notifications ADD COLUMN new_column TEXT");
-        }
-        if (oldVersion < 3) {
-            // 版本2到版本3的迁移
-        }
+        // 升级数据库
     }
 
     public long insertNotification(NotificationModel notification) {
