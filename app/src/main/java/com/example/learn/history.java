@@ -8,10 +8,12 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,10 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +49,7 @@ public class history extends AppCompatActivity {
     private FloatingActionButton fabChild4;
 
     //*********************************************
+    private NotificationViewModel viewModel;
     private boolean isFabOpen = false;
 
     private NotificationDatabaseHelper dbHelper;
@@ -69,7 +74,18 @@ public class history extends AppCompatActivity {
         adapter = new NotificationAdapter(notifications);
         recyclerView.setAdapter(adapter);
         // 初始化数据库
-        dbHelper = new NotificationDatabaseHelper(this);
+       dbHelper = new NotificationDatabaseHelper(this);
+
+        // 初始化 ViewModel
+        viewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
+        viewModel.init(getApplicationContext());
+
+        // 观察数据变化
+        viewModel.getNotifications().observe(this, data -> {
+            adapter.setNotifications(data);
+            adapter.notifyDataSetChanged();
+        });
+
 
         // 注册广播接收器
         // 修改后（添加标志）：
@@ -131,6 +147,16 @@ public class history extends AppCompatActivity {
 
 
     }
+    private void loadNotifications() {
+        new Thread(() -> {
+            List<NotificationModel> data = dbHelper.getAllNotifications();
+            runOnUiThread(() -> {
+                adapter.setNotifications(data);
+                adapter.notifyDataSetChanged();
+            });
+        }).start();
+    }
+
     private void Huabing() {
         Toast.makeText(history.this,"功能尚未实现", Toast.LENGTH_SHORT).show();
     }
@@ -150,10 +176,6 @@ public class history extends AppCompatActivity {
 
         // 计算子按钮总高度（包括间距）
         float totalHeight = 0;
-//        for (int i = 0; i < fabMenu.getChildCount(); i++) {
-//            View child = fabMenu.getChildAt(i);
-//            totalHeight +=  + ((LinearLayout.LayoutParams) child.getLayoutParams()).bottomMargin;
-//        }
         View child = fabMenu.getChildAt(1);
         float jianJu = ((LinearLayout.LayoutParams) child.getLayoutParams()).bottomMargin;
         totalHeight = child.getHeight()+jianJu;
@@ -171,15 +193,6 @@ public class history extends AppCompatActivity {
                 .setDuration(300);
     }
 
-    private void loadNotifications() {
-        new Thread(() -> {
-            List<NotificationModel> data = dbHelper.getAllNotifications();
-            runOnUiThread(() -> {
-                adapter.setNotifications(data);
-                adapter.notifyDataSetChanged();
-            });
-        }).start();
-    }
     private void closeFabMenu() {
         // 子按钮向下收回动画
         fabMenu.animate()
@@ -223,6 +236,7 @@ public class history extends AppCompatActivity {
     /**
      * 13+动态申请，低的跳转到通知设置页面
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void openNotificationSettings() {
         Intent intent;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

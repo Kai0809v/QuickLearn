@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     // 创建表语句
     //卡片对应信息的更改代表着对应数据库的更改，所以改完信息后，数据库也要更新，要么将软件数据清除重新生成数据库
     private static final String CREATE_TABLE =
-            "CREATE TABLE notifications (" +
+            "CREATE TABLE IF NOT EXISTS notifications (" +
                     "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "package_name TEXT NOT NULL," +
                     "app_name TEXT NOT NULL," +
@@ -28,7 +29,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
                     "timestamp LONG NOT NULL);";
 
     public NotificationDatabaseHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, DB_NAME, null, DB_VERSION);// 数据库名称和版本号
     }
 
     //删除旧数据
@@ -76,4 +77,24 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
+    // 返回 LiveData 的查询方法
+    public LiveData<List<NotificationModel>> getNotificationsLiveData() {
+        loadNotificationsAsync();
+        return notificationsLiveData;
+    }
+    // 异步加载数据并更新 LiveData
+    private void loadNotificationsAsync() {
+        new Thread(() -> {
+            List<NotificationModel> data = getAllNotifications();
+            notificationsLiveData.postValue(data);
+        }).start();
+    }
+    // 当数据库变更时调用此方法（例如插入/删除数据后）
+    public void notifyDataChanged() {
+        loadNotificationsAsync();
+    }
+    /*
+    *筛选（待完成
+     */
+    //SELECT * FROM notifications WHERE app_name = '微信' AND content LIKE '%红包%';
 }

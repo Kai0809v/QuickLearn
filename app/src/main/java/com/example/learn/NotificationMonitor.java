@@ -47,10 +47,10 @@ public class NotificationMonitor extends NotificationListenerService {
             notification.setContent(content);
             notification.setTimestamp(timestamp);
 
-            dbHelper.insertNotification(notification);
 
             // 通知界面更新（通过广播）
-            sendBroadcast(new Intent("NOTIFICATION_UPDATE"));
+            //sendBroadcast(new Intent("NOTIFICATION_UPDATE"));
+            dbHelper.insertNotification(notification);
 
         } catch (Exception e) {
             Log.e(TAG, "处理通知错误: " + e.getMessage());
