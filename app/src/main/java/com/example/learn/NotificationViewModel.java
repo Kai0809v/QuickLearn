@@ -24,7 +24,6 @@ public class NotificationViewModel extends ViewModel {
     public void deleteAllNotifications() {
         new Thread(() -> {
             dbHelper.deleteAllNotifications();
-            dbHelper.notifyDataChanged(); // 触发数据更新
         }).start();
     }
 }

@@ -37,6 +37,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("notifications", null, null); // 删除所有数据
         db.close();
+        loadNotificationsAsync();
     }
 
     @Override
@@ -56,9 +57,23 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         values.put("title",notification.getTitle());
         values.put("content", notification.getContent());
         values.put("timestamp", notification.getTimestamp());
-        return db.insert("notifications", null, values);
+        long result = db.insert("notifications", null, values);
+        db.close();
+        loadNotificationsAsync();
+        return result;
     }
-
+    // 返回 LiveData 的查询方法
+    public LiveData<List<NotificationModel>> getNotificationsLiveData() {
+        loadNotificationsAsync();
+        return notificationsLiveData;
+    }
+    // 异步加载数据并更新 LiveData
+    private void loadNotificationsAsync() {
+        new Thread(() -> {
+            List<NotificationModel> data = getAllNotifications();
+            notificationsLiveData.postValue(data);
+        }).start();
+    }
     public List<NotificationModel> getAllNotifications() {
         List<NotificationModel> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -75,24 +90,10 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
             list.add(item);
         }
         cursor.close();
+        db.close();
         return list;
     }
-    // 返回 LiveData 的查询方法
-    public LiveData<List<NotificationModel>> getNotificationsLiveData() {
-        loadNotificationsAsync();
-        return notificationsLiveData;
-    }
-    // 异步加载数据并更新 LiveData
-    private void loadNotificationsAsync() {
-        new Thread(() -> {
-            List<NotificationModel> data = getAllNotifications();
-            notificationsLiveData.postValue(data);
-        }).start();
-    }
-    // 当数据库变更时调用此方法（例如插入/删除数据后）
-    public void notifyDataChanged() {
-        loadNotificationsAsync();
-    }
+
     /*
     *筛选（待完成
      */

@@ -127,10 +127,11 @@ public class history extends AppCompatActivity {
                     .setPositiveButton("确定", (dialog, which) -> {
                         new Thread(() -> {
                             dbHelper.deleteAllNotifications();
-                            runOnUiThread(() -> {
-                                loadNotifications();
+                            runOnUiThread(() -> {//Toast 必须在主线程（UI 线程）中显示
+                                loadNotifications();//因为它涉及到与 UI 相关的操作
                                 Toast.makeText(history.this, "已删除所有记录", Toast.LENGTH_SHORT).show();
                             });
+
                         }).start();
                     })
                     .setNegativeButton("取消", null)
@@ -148,13 +149,17 @@ public class history extends AppCompatActivity {
 
     }
     private void loadNotifications() {
-        new Thread(() -> {
-            List<NotificationModel> data = dbHelper.getAllNotifications();
-            runOnUiThread(() -> {
-                adapter.setNotifications(data);
-                adapter.notifyDataSetChanged();
-            });
-        }).start();
+        dbHelper.getNotificationsLiveData().observe(this, data -> {
+            adapter.setNotifications(data);
+            adapter.notifyDataSetChanged();
+        });
+//        new Thread(() -> {
+//            List<NotificationModel> data = dbHelper.getAllNotifications();
+//            runOnUiThread(() -> {
+//                adapter.setNotifications(data);
+//                adapter.notifyDataSetChanged();
+//            });
+//        }).start();
     }
 
     private void Huabing() {
@@ -170,7 +175,6 @@ public class history extends AppCompatActivity {
         }
         isFabOpen = !isFabOpen;
     }
-    //
     private void openFabMenu() {//开！！！将大局逆转吧（滑稽）
         fabMenu.setVisibility(View.VISIBLE);
 
@@ -271,8 +275,7 @@ public class history extends AppCompatActivity {
 
 
 
-    /**
-     * 检查通知权限状态
+    /**检查通知权限状态
      */
     private boolean hasNotificationPermission() {
         // Android 13 (API 33) 及以上需要动态权限
