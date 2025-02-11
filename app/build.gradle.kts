@@ -58,7 +58,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    //debugImplementation(libs.androidx.ui.test.manifest)
 
     //implementation("com.google.android.material:material:1.4.0")
     //在gradle/libs.versions.toml 文件中给Material Design 的依赖项取了个别名，即material，

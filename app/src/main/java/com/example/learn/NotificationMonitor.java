@@ -1,6 +1,5 @@
 package com.example.learn;
 
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -51,7 +50,7 @@ public class NotificationMonitor extends NotificationListenerService {
             // 通知界面更新（通过广播）
             //sendBroadcast(new Intent("NOTIFICATION_UPDATE"));
             dbHelper.insertNotification(notification);
-
+            dbHelper.loadNotificationsAsync();
         } catch (Exception e) {
             Log.e(TAG, "处理通知错误: " + e.getMessage());
         }

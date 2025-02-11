@@ -3,11 +3,11 @@ package com.example.learn
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import android.provider.Settings
 
 class MainActivity : ComponentActivity() {
     //在 Java和kotlin中，只要方法定义在同一个类中，方法定义的位置实际上不影响程序的正常运行。

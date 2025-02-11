@@ -36,8 +36,8 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     public void deleteAllNotifications() {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("notifications", null, null); // 删除所有数据
-        db.close();
         loadNotificationsAsync();
+        //db.close();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         values.put("content", notification.getContent());
         values.put("timestamp", notification.getTimestamp());
         long result = db.insert("notifications", null, values);
-        db.close();
+        //db.close();
         loadNotificationsAsync();
         return result;
     }
@@ -67,8 +67,8 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         loadNotificationsAsync();
         return notificationsLiveData;
     }
-    // 异步加载数据并更新 LiveData
-    private void loadNotificationsAsync() {
+    /**异步加载数据并更新 LiveData*/
+    public void loadNotificationsAsync() {//修改了public
         new Thread(() -> {
             List<NotificationModel> data = getAllNotifications();
             notificationsLiveData.postValue(data);
@@ -90,7 +90,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
             list.add(item);
         }
         cursor.close();
-        db.close();
+        //db.close();
         return list;
     }
 

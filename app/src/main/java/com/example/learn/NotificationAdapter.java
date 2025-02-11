@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 
@@ -30,7 +32,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_item, parent, false);
         return new NotificationViewHolder(view);
     }
-    // 绑定数据
+    /**绑定数据*/
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
         NotificationModel notification = notificationList.get(position);
@@ -39,7 +41,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.tvContent.setText(notification.getContent());
         holder.tvTime.setText(notification.getFormattedTime());
     }
-    // 获取数据数量
+    /**获取数据数量*/
     @Override
     public int getItemCount() {
         return notificationList.size();

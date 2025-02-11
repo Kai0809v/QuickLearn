@@ -3,17 +3,14 @@ package com.example.learn;
 import static java.sql.DriverManager.println;
 
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,7 +27,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +43,7 @@ public class history extends AppCompatActivity {
     private FloatingActionButton fabChild2;//对悬浮按钮的声明
     private FloatingActionButton fabChild3;
     private FloatingActionButton fabChild4;
+    private FloatingActionButton fabChild5;
 
     //*********************************************
     private NotificationViewModel viewModel;
@@ -89,17 +86,17 @@ public class history extends AppCompatActivity {
 
         // 注册广播接收器
         // 修改后（添加标志）：
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Android 13+ 需要显式声明导出属性
-            registerReceiver(
-                    updateReceiver,
-                    new IntentFilter("NOTIFICATION_UPDATE"),
-                    Context.RECEIVER_NOT_EXPORTED // 限制为仅本应用可接收
-            );
-        } else {
-            // 旧版本无需标志
-            registerReceiver(updateReceiver, new IntentFilter("NOTIFICATION_UPDATE"));
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            // Android 13+ 需要显式声明导出属性
+//            registerReceiver(
+//                    updateReceiver,
+//                    new IntentFilter("NOTIFICATION_UPDATE"),
+//                    Context.RECEIVER_NOT_EXPORTED // 限制为仅本应用可接收
+//            );
+//        } else {
+//            // 旧版本无需标志
+//            registerReceiver(updateReceiver, new IntentFilter("NOTIFICATION_UPDATE"));
+//        }
 
         // 首次加载数据
         loadNotifications();
@@ -111,6 +108,7 @@ public class history extends AppCompatActivity {
         fabChild2 = findViewById(R.id.fab_child2);
         fabChild3 = findViewById(R.id.fab_child3);
         fabChild4 = findViewById(R.id.fab_child4);
+        fabChild5 = findViewById(R.id.fab_child5);
 
 
 
@@ -145,6 +143,7 @@ public class history extends AppCompatActivity {
             Huabing();
             //以后弄个自定义
         });
+        fabChild5.setOnClickListener(v -> loadNotifications());
 
 
     }
