@@ -84,8 +84,8 @@ public class history extends AppCompatActivity {
         });
 
 
-        // 注册广播接收器
-        // 修改后（添加标志）：
+        // 注册广播接收器（添加标志）：
+        // 如果注册了记得取消注册接收器；相关代码在末尾
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 //            // Android 13+ 需要显式声明导出属性
 //            registerReceiver(
@@ -342,7 +342,7 @@ public class history extends AppCompatActivity {
                 .setAutoCancel(true); // 点击后自动消失
 
         // 3. 添加点击动作（可选）
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, history.class);//点击通知后跳转的页面
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this,
                 0,
@@ -357,11 +357,11 @@ public class history extends AppCompatActivity {
     }
 
         // 销毁广播接收器
-        @Override
-        protected void onDestroy() {
-            super.onDestroy();
-            unregisterReceiver(updateReceiver);
-        }
+//        @Override
+//        protected void onDestroy() {
+//            super.onDestroy();
+//            unregisterReceiver(updateReceiver);
+//        }
 
 
 

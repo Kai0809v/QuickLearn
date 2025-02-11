@@ -86,9 +86,7 @@ class MainActivity : ComponentActivity() {
         }
 
     }
-    /**
-     * 引导用户授权通知访问权限
-     */
+    /**引导用户授权通知访问权限*/
     private fun requestNotificationAccess() {
         // 检查权限是否已开启
         if (!isNotificationServiceEnabled()) {
@@ -108,9 +106,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    /**
-     * 检查通知访问权限是否已开启
-     */
+    /**检查通知访问权限是否已开启*/
     private fun isNotificationServiceEnabled(): Boolean {
         val packageName = packageName
         val flat = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
