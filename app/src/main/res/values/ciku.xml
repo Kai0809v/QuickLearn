@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ciku_texts">
+        <item>你好世界</item>
+        <item>1</item>
+        <item>2</item>
+        <item>回首向来萧瑟处\n归去，也无风雨也无晴</item>
+        <item>4</item>
+        <item>5</item>
+        <item>莫听穿林打叶声🍃\n何妨吟啸且徐行</item>
+    </string-array>
+</resources>

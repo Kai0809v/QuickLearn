@@ -8,18 +8,22 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 
 class MainActivity : ComponentActivity() {
     //在 Java和kotlin中，只要方法定义在同一个类中，方法定义的位置实际上不影响程序的正常运行。
 
     private var count = 0
-    private val texts = arrayOf("你好", "世界", "你好世界")
+    //private val texts = arrayOf("你好世界","1","2")
+    private val mainTexts: Array<String> by lazy {
+        resources.getStringArray(R.array.ciku_texts)
+    }
     //kotlin的数组中的元素也是从0开始的
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()//开启边缘到边缘Kotlin
         setContentView(R.layout.mainactivity)
         // 调用引导用户授权的方法
         requestNotificationAccess()
@@ -69,11 +73,18 @@ class MainActivity : ComponentActivity() {
             startActivity(intent)
         }
         myButton3.setOnClickListener {
-            if (count < 3) {
-                wenben.text = texts[count]
+            if (count < 7) {
+                wenben.text = mainTexts[count]
+                //count++
+                if (count == 3 || count == 6){
+                    wenben.textSize = 20F
+                }else{
+                    wenben.textSize = 40f
+                }
                 count++
             }else{
                 wenben.text = "初学阶段"
+                wenben.textSize = 40f
                 count = 0
             }
             println("按钮3被点击了")

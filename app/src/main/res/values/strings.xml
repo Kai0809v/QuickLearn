@@ -2,5 +2,10 @@
     <string name="app_name">QuickLearn</string>
     <string name="func_1">历史记录</string>
     <string name="func_2">作者信息</string>
+    <string name="func_3">点我试试</string>
+    <string name="func_4">消息群发</string>
+    <string name="func_5">5未开发</string>
+    <string name="func_6">6未开发</string>
     <string name="information">作者联系方式：（邮箱）\nKai0809v@gamil.com</string>
+    <string name="my_past">往事情怀酿做酒，换我余生长醉不复忧</string>
 </resources>
