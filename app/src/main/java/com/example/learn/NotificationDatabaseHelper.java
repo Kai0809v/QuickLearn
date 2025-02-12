@@ -32,7 +32,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);// 数据库名称和版本号
     }
 
-    //删除旧数据
+    /**删除旧数据**/
     public void deleteAllNotifications() {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("notifications", null, null); // 删除所有数据
@@ -58,20 +58,22 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         values.put("content", notification.getContent());
         values.put("timestamp", notification.getTimestamp());
         long result = db.insert("notifications", null, values);
-        //db.close();
         loadNotificationsAsync();
+        System.out.println("数据库插入");
+        //db.close();
         return result;
     }
-    // 返回 LiveData 的查询方法
+    /** 调用loadNotificationsAsync，返回 LiveData*/
     public LiveData<List<NotificationModel>> getNotificationsLiveData() {
         loadNotificationsAsync();
         return notificationsLiveData;
     }
     /**异步加载数据并更新 LiveData*/
-    public void loadNotificationsAsync() {//修改了public
+    private void loadNotificationsAsync() {//修改了public
         new Thread(() -> {
             List<NotificationModel> data = getAllNotifications();
             notificationsLiveData.postValue(data);
+            System.out.println("加载");
         }).start();
     }
     public List<NotificationModel> getAllNotifications() {

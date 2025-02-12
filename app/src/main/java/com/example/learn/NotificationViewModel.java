@@ -16,7 +16,6 @@ public class NotificationViewModel extends ViewModel {
         dbHelper = new NotificationDatabaseHelper(context);
         notifications = dbHelper.getNotificationsLiveData();
     }
-
     public LiveData<List<NotificationModel>> getNotifications() {
         return notifications;
     }

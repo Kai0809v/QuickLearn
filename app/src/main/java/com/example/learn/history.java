@@ -49,9 +49,7 @@ public class history extends AppCompatActivity {
     //*********************************************
     private NotificationViewModel viewModel;
     private boolean isFabOpen = false;
-
     private NotificationDatabaseHelper dbHelper;
-
     private List<NotificationModel> notifications = new ArrayList<>();
     private NotificationAdapter adapter;
     private final BroadcastReceiver updateReceiver = new BroadcastReceiver() {
@@ -59,7 +57,7 @@ public class history extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             loadNotifications();
         }
-    };//不知道这一段有没有用
+    };//使用LiveData，暂时不用广播接收器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +77,11 @@ public class history extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
         viewModel.init(getApplicationContext());
 
-        // 观察数据变化
+        // 观察数据变化，变化时更新 RecyclerView
         viewModel.getNotifications().observe(this, data -> {
             adapter.setNotifications(data);
             adapter.notifyDataSetChanged();
+            System.out.println("观察到了变化");
         });
 
 
@@ -154,13 +153,6 @@ public class history extends AppCompatActivity {
             adapter.setNotifications(data);
             adapter.notifyDataSetChanged();
         });
-//        new Thread(() -> {
-//            List<NotificationModel> data = dbHelper.getAllNotifications();
-//            runOnUiThread(() -> {
-//                adapter.setNotifications(data);
-//                adapter.notifyDataSetChanged();
-//            });
-//        }).start();
     }
 
     private void Huabing() {
@@ -219,7 +211,6 @@ public class history extends AppCompatActivity {
         if (hasNotificationPermission()) {
             sendNotification("测试通知", "这是一则测试内容");
             loadNotifications();
-            println("按钮一");
         } else {
             showRationaleDialog();
             //************
