@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
             if (count < 7) {
                 wenben.text = mainTexts[count]
                 //count++
-                if (count == 3 || count == 6){
+                if (count == 5 || count == 6){
                     wenben.textSize = 20F
                 }else{
                     wenben.textSize = 40f
