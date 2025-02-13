@@ -15,7 +15,7 @@ import java.util.List;
 public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "notifications.db";
     private static final int DB_VERSION = 2;// 数据库版本号
-    private final MutableLiveData<List<NotificationModel>> notificationsLiveData = new MutableLiveData<>();
+    //private final MutableLiveData<List<NotificationModel>> notificationsLiveData = new MutableLiveData<>();
 
     // 创建表语句
     //卡片对应信息的更改代表着对应数据库的更改，所以改完信息后，数据库也要更新，要么将软件数据清除重新生成数据库
@@ -36,7 +36,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     public void deleteAllNotifications() {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("notifications", null, null); // 删除所有数据
-        loadNotificationsAsync();
+        //loadNotificationsAsync();
         //db.close();
     }
 
@@ -58,24 +58,24 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         values.put("content", notification.getContent());
         values.put("timestamp", notification.getTimestamp());
         long result = db.insert("notifications", null, values);
-        loadNotificationsAsync();
         System.out.println("数据库插入");
+        //viewModel.loadNotifications();
         //db.close();
         return result;
     }
-    /** 调用loadNotificationsAsync，返回 LiveData*/
-    public LiveData<List<NotificationModel>> getNotificationsLiveData() {
-        loadNotificationsAsync();
-        return notificationsLiveData;
-    }
+    /**调用loadNotificationsAsync，返回 LiveData*/
+//    public LiveData<List<NotificationModel>> getNotificationsLiveData() {
+//        loadNotificationsAsync();
+//        return notificationsLiveData;
+//    }
     /**异步加载数据并更新 LiveData*/
-    private void loadNotificationsAsync() {//修改了public
-        new Thread(() -> {
-            List<NotificationModel> data = getAllNotifications();
-            notificationsLiveData.postValue(data);
-            System.out.println("加载");
-        }).start();
-    }
+//    private void loadNotificationsAsync() {//修改了public
+//        new Thread(() -> {
+//            List<NotificationModel> data = getAllNotifications();
+//            notificationsLiveData.postValue(data);
+//            System.out.println("加载");
+//        }).start();
+//    }
     public List<NotificationModel> getAllNotifications() {
         List<NotificationModel> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();

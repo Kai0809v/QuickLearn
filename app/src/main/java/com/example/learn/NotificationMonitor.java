@@ -10,11 +10,14 @@ import android.util.Log;
 public class NotificationMonitor extends NotificationListenerService {
     private static final String TAG = "NotificationMonitor";
     private NotificationDatabaseHelper dbHelper;
+    private NotificationViewModel viewModel;
 
     @Override
     public void onCreate() {
         super.onCreate();
         dbHelper = new NotificationDatabaseHelper(this);
+        viewModel = new NotificationViewModel();
+        viewModel.init(this);
     }
 
     @Override
@@ -48,7 +51,9 @@ public class NotificationMonitor extends NotificationListenerService {
 
             // 通知界面更新（通过广播）
             //sendBroadcast(new Intent("NOTIFICATION_UPDATE"));
-            dbHelper.insertNotification(notification);//将数据存入数据库，包含了加载数据的方法
+            dbHelper.insertNotification(notification);//将数据存入数据库
+            viewModel.loadNotifications();
+            System.out.println("存入数据库");
         } catch (Exception e) {
             Log.e(TAG, "处理通知错误: " + e.getMessage());
         }

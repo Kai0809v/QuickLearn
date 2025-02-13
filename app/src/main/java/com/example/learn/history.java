@@ -52,12 +52,12 @@ public class history extends AppCompatActivity {
     private NotificationDatabaseHelper dbHelper;
     private List<NotificationModel> notifications = new ArrayList<>();
     private NotificationAdapter adapter;
-    private final BroadcastReceiver updateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            loadNotifications();
-        }
-    };//使用LiveData，暂时不用广播接收器
+//    private final BroadcastReceiver updateReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            loadNotifications();
+//        }
+//    };//使用LiveData，不用广播接收器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class history extends AppCompatActivity {
         adapter = new NotificationAdapter(notifications);
         recyclerView.setAdapter(adapter);
         // 初始化数据库
-       dbHelper = new NotificationDatabaseHelper(this);
+        dbHelper = new NotificationDatabaseHelper(this);
 
         // 初始化 ViewModel
         viewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
@@ -100,7 +100,7 @@ public class history extends AppCompatActivity {
 //        }
 
         // 首次加载数据
-        loadNotifications();
+        //loadNotifications();
 
         // 悬浮按钮对应的代码
         fabMenu = findViewById(R.id.fab_menu);
@@ -125,9 +125,9 @@ public class history extends AppCompatActivity {
                     .setMessage("确定删除所有历史记录吗？")
                     .setPositiveButton("确定", (dialog, which) -> {
                         new Thread(() -> {
-                            dbHelper.deleteAllNotifications();
+                            viewModel.deleteAllNotifications();
                             runOnUiThread(() -> {//Toast 必须在主线程（UI 线程）中显示
-                                loadNotifications();//因为它涉及到与 UI 相关的操作
+                                //loadNotifications();//因为它涉及到与 UI 相关的操作
                                 Toast.makeText(history.this, "已删除所有记录", Toast.LENGTH_SHORT).show();
                             });
 
@@ -144,16 +144,16 @@ public class history extends AppCompatActivity {
             Huabing();
             //以后弄个自定义
         });
-        fabChild5.setOnClickListener(v -> loadNotifications());
+        fabChild5.setOnClickListener(v -> viewModel.loadNotifications());
 
 
     }
-    private void loadNotifications() {
-        dbHelper.getNotificationsLiveData().observe(this, data -> {
-            adapter.setNotifications(data);
-            adapter.notifyDataSetChanged();
-        });
-    }
+//    private void loadNotifications() {
+//        dbHelper.getNotificationsLiveData().observe(this, data -> {
+//            adapter.setNotifications(data);
+//            adapter.notifyDataSetChanged();
+//        });
+//    }
 
     private void Huabing() {
         Toast.makeText(history.this,"功能尚未实现", Toast.LENGTH_SHORT).show();
@@ -210,7 +210,7 @@ public class history extends AppCompatActivity {
     private void checkAndSendNotification() {
         if (hasNotificationPermission()) {
             sendNotification("测试通知", "这是一则测试内容");
-            loadNotifications();
+            //loadNotifications();
         } else {
             showRationaleDialog();
             //************
