@@ -23,7 +23,7 @@
             android:exported="true"/>
         <activity
             android:name=".InfActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -32,6 +32,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <meta-data android:name="tingfeng.manu" android:resource="@xml/quick_manu"/>
         </activity>
 
         <service

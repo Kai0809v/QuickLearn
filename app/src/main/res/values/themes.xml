@@ -12,6 +12,7 @@
     <style name="Theme.QuickLearn" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorAccent">#2196F3</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:fitsSystemWindows">true</item>
 
     </style>
 
