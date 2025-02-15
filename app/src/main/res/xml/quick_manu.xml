@@ -2,15 +2,16 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
 
     <shortcut
-        android:shortcutId="manu1"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
+        android:shortcutId="manu1"
         android:shortcutShortLabel="@string/func_1"
         android:shortcutLongLabel="@string/func_1">
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.example.learn"
             android:targetClass="com.example.learn.history" />
+        <categories android:name="android.shortcut.conversation" />
     </shortcut>
 
 </shortcuts>
