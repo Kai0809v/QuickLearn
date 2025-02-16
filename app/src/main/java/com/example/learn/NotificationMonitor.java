@@ -53,7 +53,7 @@ public class NotificationMonitor extends NotificationListenerService {
             //sendBroadcast(new Intent("NOTIFICATION_UPDATE"));
             dbHelper.insertNotification(notification);//将数据存入数据库
             viewModel.loadNotifications();
-            System.out.println("存入数据库");
+            System.out.println("monitor:存入数据库");
         } catch (Exception e) {
             Log.e(TAG, "处理通知错误: " + e.getMessage());
         }

@@ -1,15 +1,10 @@
 package com.example.learn;
 
-import static java.sql.DriverManager.println;
-
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -127,7 +122,7 @@ public class history extends AppCompatActivity {
                         new Thread(() -> {
                             viewModel.deleteAllNotifications();
                             runOnUiThread(() -> {//Toast 必须在主线程（UI 线程）中显示
-                                //loadNotifications();//因为它涉及到与 UI 相关的操作
+                                //因为它涉及到与 UI 相关的操作
                                 Toast.makeText(history.this, "已删除所有记录", Toast.LENGTH_SHORT).show();
                             });
 
@@ -204,20 +199,17 @@ public class history extends AppCompatActivity {
                 .rotationBy(180f)
                 .setDuration(300);
     }
-    /**
-    *判断是否有通知权限
-     */
+    /**判断是否有通知权限*/
     private void checkAndSendNotification() {
         if (hasNotificationPermission()) {
             sendNotification("测试通知", "这是一则测试内容");
-            //loadNotifications();
         } else {
             showRationaleDialog();
             //************
         }
     }
 
-    // 显示解释性对话框，拒绝后的引导
+    // 显示解释性对话框
     private void showRationaleDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("需要通知权限")
@@ -229,9 +221,7 @@ public class history extends AppCompatActivity {
                 .setNegativeButton("取消", null)
                 .show();
     }
-    /**
-     * 13+动态申请，低的跳转到通知设置页面
-     */
+    /**13+动态申请，低的跳转到通知设置页面*/
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void openNotificationSettings() {
         Intent intent;

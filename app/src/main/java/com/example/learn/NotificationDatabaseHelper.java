@@ -58,7 +58,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         values.put("content", notification.getContent());
         values.put("timestamp", notification.getTimestamp());
         long result = db.insert("notifications", null, values);
-        System.out.println("数据库插入");
+        System.out.println("db:数据库插入");
         //viewModel.loadNotifications();
         //db.close();
         return result;

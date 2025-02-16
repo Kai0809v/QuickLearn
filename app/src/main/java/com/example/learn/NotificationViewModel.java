@@ -16,7 +16,7 @@ public class NotificationViewModel extends ViewModel {
     public void init(Context context) {
         dbHelper = new NotificationDatabaseHelper(context);
         // 初始加载数据
-        System.out.println("初始化数据");
+        System.out.println("viewmodel:初始化数据");
         loadNotifications();
     }
 
