@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -24,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,9 +33,9 @@ import java.util.List;
 public class history extends AppCompatActivity {
     //***********    按钮声明区   *************************
     private LinearLayout fabMenu;
-    private FloatingActionButton fabMain;
+    private FloatingActionButton fabMain;//对悬浮按钮的声明
     private FloatingActionButton fabChild1;
-    private FloatingActionButton fabChild2;//对悬浮按钮的声明
+    private FloatingActionButton fabChild2;
     private FloatingActionButton fabChild3;
     private FloatingActionButton fabChild4;
     private FloatingActionButton fabChild5;
@@ -76,9 +73,6 @@ public class history extends AppCompatActivity {
             System.out.println("观察到了变化");
         });
 
-        // 初始化 ViewModel
-//        viewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
-//        viewModel.init(getApplicationContext());
         // 初始化 RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerViewNotifications);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -146,12 +140,6 @@ public class history extends AppCompatActivity {
         });
         fabChild5.setOnClickListener(v -> viewModel.loadNotifications());
     }
-//    private void loadNotifications() {
-//        dbHelper.getNotificationsLiveData().observe(this, data -> {
-//            adapter.setNotifications(data);
-//            adapter.notifyDataSetChanged();
-//        });
-//    }
 
     private void Huabing() {
         Toast.makeText(history.this,"功能尚未实现", Toast.LENGTH_SHORT).show();
@@ -352,7 +340,5 @@ public class history extends AppCompatActivity {
 //            super.onDestroy();
 //            unregisterReceiver(updateReceiver);
 //        }
-
-
 
 }

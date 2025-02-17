@@ -28,7 +28,7 @@ public class NotificationViewModel extends ViewModel {
         new Thread(() -> {
             List<NotificationModel> data = dbHelper.getAllNotifications();
             notifications.postValue(data);
-            System.out.println("viewmodel:更新livedata");
+            System.out.println("viewmodel:更新/加载livedata");
         }).start();
     }
     public void insertNotification(NotificationModel notification) {

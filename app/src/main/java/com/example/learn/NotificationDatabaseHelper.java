@@ -6,9 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("notifications", null, null); // 删除所有数据
         //loadNotificationsAsync();
-        //db.close();
+        db.close();// 关闭数据库连接
     }
 
     @Override
@@ -59,8 +56,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         values.put("timestamp", notification.getTimestamp());
         long result = db.insert("notifications", null, values);
         System.out.println("db:数据库插入");
-        //viewModel.loadNotifications();
-        //db.close();
+        db.close();
         return result;
     }
 
@@ -80,7 +76,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
             list.add(item);
         }
         cursor.close();
-        //db.close();
+        db.close();
         return list;
     }
 
