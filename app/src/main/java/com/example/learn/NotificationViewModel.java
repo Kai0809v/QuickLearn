@@ -28,10 +28,15 @@ public class NotificationViewModel extends ViewModel {
         new Thread(() -> {
             List<NotificationModel> data = dbHelper.getAllNotifications();
             notifications.postValue(data);
-            System.out.println("viewmodel:加载数据");
+            System.out.println("viewmodel:更新livedata");
         }).start();
     }
-
+    public void insertNotification(NotificationModel notification) {
+        new Thread(() -> {
+            dbHelper.insertNotification(notification);
+            loadNotifications(); // 插入后重新加载数据
+        }).start();
+    }
     public void deleteAllNotifications() {
         new Thread(() -> {
             dbHelper.deleteAllNotifications();

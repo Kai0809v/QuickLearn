@@ -63,19 +63,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
         //db.close();
         return result;
     }
-    /**调用loadNotificationsAsync，返回 LiveData*/
-//    public LiveData<List<NotificationModel>> getNotificationsLiveData() {
-//        loadNotificationsAsync();
-//        return notificationsLiveData;
-//    }
-    /**异步加载数据并更新 LiveData*/
-//    private void loadNotificationsAsync() {//修改了public
-//        new Thread(() -> {
-//            List<NotificationModel> data = getAllNotifications();
-//            notificationsLiveData.postValue(data);
-//            System.out.println("加载");
-//        }).start();
-//    }
+
     public List<NotificationModel> getAllNotifications() {
         List<NotificationModel> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -97,7 +85,6 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    *筛选（待完成
-     */
+     * 筛选（待完成*/
     //SELECT * FROM notifications WHERE app_name = '微信' AND content LIKE '%红包%';
 }

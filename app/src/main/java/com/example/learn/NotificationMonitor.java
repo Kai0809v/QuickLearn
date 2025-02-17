@@ -1,11 +1,14 @@
 package com.example.learn;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
+
+import androidx.lifecycle.ViewModelProvider;
 
 public class NotificationMonitor extends NotificationListenerService {
     private static final String TAG = "NotificationMonitor";
@@ -16,8 +19,10 @@ public class NotificationMonitor extends NotificationListenerService {
     public void onCreate() {
         super.onCreate();
         dbHelper = new NotificationDatabaseHelper(this);
-        viewModel = new NotificationViewModel();
+        TingFeng app = (TingFeng) getApplication();
+        viewModel = app.getSharedViewModel();
         viewModel.init(this);
+
     }
 
     @Override
@@ -51,8 +56,10 @@ public class NotificationMonitor extends NotificationListenerService {
 
             // 通知界面更新（通过广播）
             //sendBroadcast(new Intent("NOTIFICATION_UPDATE"));
-            dbHelper.insertNotification(notification);//将数据存入数据库
-            viewModel.loadNotifications();
+
+            //dbHelper.insertNotification(notification);//将数据存入数据库
+            viewModel.insertNotification(notification); // 使用 ViewModel 插入数据,触发数据更新
+            //viewModel.loadNotifications();
             System.out.println("monitor:存入数据库");
         } catch (Exception e) {
             Log.e(TAG, "处理通知错误: " + e.getMessage());

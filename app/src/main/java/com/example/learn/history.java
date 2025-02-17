@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -47,10 +49,11 @@ public class history extends AppCompatActivity {
     private NotificationDatabaseHelper dbHelper;
     private List<NotificationModel> notifications = new ArrayList<>();
     private NotificationAdapter adapter;
+
 //    private final BroadcastReceiver updateReceiver = new BroadcastReceiver() {
 //        @Override
 //        public void onReceive(Context context, Intent intent) {
-//            loadNotifications();
+//            viewModel.loadNotifications(); // 收到广播后重新加载数据
 //        }
 //    };//使用LiveData，不用广播接收器
 
@@ -58,26 +61,30 @@ public class history extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        TingFeng app = (TingFeng) getApplication();
+        // 初始化数据库
+        dbHelper = new NotificationDatabaseHelper(this);
+        viewModel = app.getSharedViewModel();
+        viewModel.init(getApplicationContext());
+
         setContentView(R.layout.page_history);
+
+        // 观察数据，变化时更新 RecyclerView
+        viewModel.getNotifications().observe(this, data -> {
+            adapter.setNotifications(data);
+            adapter.notifyDataSetChanged();
+            System.out.println("观察到了变化");
+        });
+
+        // 初始化 ViewModel
+//        viewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
+//        viewModel.init(getApplicationContext());
         // 初始化 RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerViewNotifications);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new NotificationAdapter(notifications);
         recyclerView.setAdapter(adapter);
-        // 初始化数据库
-        dbHelper = new NotificationDatabaseHelper(this);
-
-        // 初始化 ViewModel
-        viewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
-        viewModel.init(getApplicationContext());
-
-        // 观察数据变化，变化时更新 RecyclerView
-        viewModel.getNotifications().observe(this, data -> {
-            adapter.setNotifications(data);
-            adapter.notifyDataSetChanged();
-            System.out.println("观察到了变化");
-        });
 
 
         // 注册广播接收器（添加标志）：
@@ -94,8 +101,6 @@ public class history extends AppCompatActivity {
 //            registerReceiver(updateReceiver, new IntentFilter("NOTIFICATION_UPDATE"));
 //        }
 
-        // 首次加载数据
-        //loadNotifications();
 
         // 悬浮按钮对应的代码
         fabMenu = findViewById(R.id.fab_menu);
@@ -140,8 +145,6 @@ public class history extends AppCompatActivity {
             //以后弄个自定义
         });
         fabChild5.setOnClickListener(v -> viewModel.loadNotifications());
-
-
     }
 //    private void loadNotifications() {
 //        dbHelper.getNotificationsLiveData().observe(this, data -> {
@@ -339,7 +342,11 @@ public class history extends AppCompatActivity {
 
     }
 
-        // 销毁广播接收器
+    public NotificationDatabaseHelper getDbHelper() {
+        return dbHelper;
+    }
+
+    // 销毁广播接收器
 //        @Override
 //        protected void onDestroy() {
 //            super.onDestroy();
