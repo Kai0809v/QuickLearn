@@ -18,8 +18,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="初学阶段"
         android:layout_marginBottom="16dp"
+        android:text="初学阶段"
         android:textSize="40sp" />
     <!-- 添加了一个空的 View 来作为图片和按钮之间的间隔
     控件之间的间距也可以用这个
@@ -33,6 +33,7 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
 
         android:text="@string/func_1" />
@@ -60,5 +61,14 @@
         android:layout_height="wrap_content"
 
         android:text="@string/func_4" />
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+
+        android:text="@string/Tip0" />
 
 </LinearLayout>

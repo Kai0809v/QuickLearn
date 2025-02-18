@@ -44,7 +44,7 @@ public class history extends AppCompatActivity {
     private NotificationViewModel viewModel;
     private boolean isFabOpen = false;
     private NotificationDatabaseHelper dbHelper;
-    private List<NotificationModel> notifications = new ArrayList<>();
+    private final List<NotificationModel> notifications = new ArrayList<>();
     private NotificationAdapter adapter;
 
 //    private final BroadcastReceiver updateReceiver = new BroadcastReceiver() {

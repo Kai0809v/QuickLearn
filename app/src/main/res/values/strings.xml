@@ -7,5 +7,6 @@
     <string name="func_5">5未开发</string>
     <string name="func_6">6未开发</string>
     <string name="information">作者联系方式：（邮箱）\nKai0809v@gamil.com</string>
+    <string name="Tip0">如果想要应用能够在后台稳定运行，建议在该应用的设置界面-耗电管理中，开启允许应用后台行为（耗电量很低的）</string>
     <string name="my_past">往事情怀酿做酒，换我余生长醉不复忧</string>
 </resources>
