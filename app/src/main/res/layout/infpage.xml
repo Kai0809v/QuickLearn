@@ -5,8 +5,26 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="@string/information" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/inf_b1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/Github"
+        android:backgroundTint="@color/button_background"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/inf_b2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/Telegram"
+        android:backgroundTint="@color/button_background"/>
+
 </LinearLayout>
