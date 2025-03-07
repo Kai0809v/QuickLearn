@@ -6,6 +6,13 @@
     <string name="func_4">消息群发</string>
     <string name="func_5">5未开发</string>
     <string name="func_6">6未开发</string>
+    <string name="ListenSwitch">通知记录开关（目前还只是个摆设）</string>
+    <string name="mode">接收模式</string>
+    <string name="WList">白名单模式</string>
+    <string name="WTip">只记录选中的部分</string>
+    <string name="BList">黑名单模式</string>
+    <string name="BTip">选中的部分将不被记录</string>
+    <string name="Rules">自定义模式</string>
     <string name="Github">[Github]  QuickLearn</string>
     <string name="QQ">QQ：2451802186这个是自动补全的QQ号，我也不知道是谁</string>
     <string name="Telegram">Telegram：@Kai0809v</string>

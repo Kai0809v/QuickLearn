@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class history extends AppCompatActivity {
             checkAndSendNotification();
         });
         fabChild2.setOnClickListener(v -> {
-            new AlertDialog.Builder(history.this)
+            new MaterialAlertDialogBuilder(history.this)
                     .setTitle("删除记录")
                     .setMessage("确定删除所有历史记录吗？")
                     .setPositiveButton("确定", (dialog, which) -> {
@@ -202,7 +203,7 @@ public class history extends AppCompatActivity {
 
     // 显示解释性对话框
     private void showRationaleDialog() {
-        new AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this)
                 .setTitle("需要通知权限")
                 .setMessage("用于发送测试通知，请允许权限")
                 .setPositiveButton("继续授权", (dialog, which) -> {
@@ -233,7 +234,7 @@ public class history extends AppCompatActivity {
 
     // 显示被永久拒绝后的引导对话框
     private void showPermanentDeniedDialog() {
-        new AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this)
                 .setTitle("权限被永久拒绝")
                 .setMessage("您已永久拒绝通知权限，请前往设置手动开启")
                 .setPositiveButton("去设置", (dialog, which) -> {

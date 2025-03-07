@@ -1,6 +1,5 @@
 package com.example.learn
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -9,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : ComponentActivity() {
     //在 Java和kotlin中，只要方法定义在同一个类中，方法定义的位置实际上不影响程序的正常运行。
@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
         // 检查权限是否已开启
         if (!isNotificationServiceEnabled()) {
             // 如果未开启，弹出对话框提示用户去设置页面开启
-            AlertDialog.Builder(this)
+            MaterialAlertDialogBuilder(this)
                 .setTitle("通知访问权限")
                 .setMessage("为了使用通知记录功能，请开启通知访问权限。")
                 .setPositiveButton("去开启") { _, _ ->

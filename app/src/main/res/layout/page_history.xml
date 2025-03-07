@@ -70,7 +70,7 @@
             app:backgroundTint="#2196F3"
             android:layout_marginBottom="16dp"
             app:tint="@android:color/white"
-            app:srcCompat="@drawable/logger_settings"
+            app:srcCompat="@drawable/settings"
             app:elevation="6dp"/>
 
         <!-- 子按钮5 -->
