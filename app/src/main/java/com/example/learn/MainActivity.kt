@@ -61,8 +61,6 @@ class MainActivity : ComponentActivity() {
                 wenben.textSize = 40f
                 count = 0
             }
-            println("按钮3被点击了")
-
         }
         myButton4.setOnClickListener {
             Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
