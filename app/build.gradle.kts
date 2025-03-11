@@ -4,11 +4,11 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 android {
-    namespace = "com.example.learn"
+    namespace = "com.dreamct.tingfeng"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.learn"
+        applicationId = "com.dreamct.tingfeng"
         minSdk = 25
         targetSdk = 34
         versionCode = 1

@@ -6,7 +6,7 @@
     <string name="func_4">消息群发</string>
     <string name="func_5">5未开发</string>
     <string name="func_6">6未开发</string>
-    <string name="ListenSwitch">通知记录开关（目前还只是个摆设）</string>
+    <string name="ListenSwitch">通知记录开关</string>
     <string name="mode">接收模式</string>
     <string name="WList">白名单模式</string>
     <string name="WTip">只记录选中的部分</string>

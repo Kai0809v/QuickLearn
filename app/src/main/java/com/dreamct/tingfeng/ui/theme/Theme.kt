@@ -1,4 +1,4 @@
-package com.example.learn.ui.theme
+package com.dreamct.tingfeng.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

@@ -1,4 +1,4 @@
-package com.example.learn.ui.theme
+package com.dreamct.tingfeng.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.example.learn;
+package com.dreamct.tingfeng;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -84,5 +84,15 @@ public class NotificationMonitor extends NotificationListenerService {
             if (text != null) return text.toString();
         }
         return "无文本内容";
+    }
+
+    @Override
+    public void onListenerConnected() {
+        // 服务连接时触发
+    }
+
+    @Override
+    public void onListenerDisconnected() {
+        // 服务断开时触发
     }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/topbar1"
+        android:title="顶部按钮"
+        android:contentDescription="暂时没有"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/topbar2"
+        android:icon="@drawable/refresh"
+        android:title="不知道这个按钮在哪"
+        android:contentDescription="暂时没有"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/more1"
+        android:title="@string/func_3"
+        android:contentDescription="暂时没有"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/more2"
+        android:title="@string/func_3"
+        android:contentDescription="暂时没有"
+        app:showAsAction="never"
+        />
+</menu>

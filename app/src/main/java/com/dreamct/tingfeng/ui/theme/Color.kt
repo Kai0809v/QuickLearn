@@ -1,4 +1,4 @@
-package com.example.learn.ui.theme
+package com.dreamct.tingfeng.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

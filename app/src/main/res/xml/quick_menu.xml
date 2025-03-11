@@ -9,8 +9,8 @@
         android:shortcutLongLabel="@string/func_1">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.example.learn"
-            android:targetClass="com.example.learn.history" />
+            android:targetPackage="com.dreamct.tingfeng"
+            android:targetClass="com.dreamct.tingfeng.history" />
 
     </shortcut>
     <shortcut
@@ -21,8 +21,8 @@
         android:shortcutLongLabel="@string/func_2">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.example.learn"
-            android:targetClass="com.example.learn.InfActivity" />
+            android:targetPackage="com.dreamct.tingfeng"
+            android:targetClass="com.dreamct.tingfeng.InfActivity" />
     </shortcut>
 
 

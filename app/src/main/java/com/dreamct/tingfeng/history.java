@@ -1,6 +1,5 @@
-package com.example.learn;
+package com.dreamct.tingfeng;
 
-import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
