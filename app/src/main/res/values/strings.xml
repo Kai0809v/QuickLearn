@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">听风</string>
     <string name="func_1">历史记录</string>
-    <string name="func_2">作者信息</string>
+    <string name="inf">作者信息</string>
     <string name="func_3">点我试试</string>
     <string name="func_4">消息群发</string>
     <string name="func_5">5未开发</string>
     <string name="func_6">6未开发</string>
+    <string name="delete">删除数据库</string>
     <string name="ListenSwitch">通知记录开关</string>
     <string name="mode">接收模式</string>
     <string name="WList">白名单模式</string>
@@ -13,10 +14,12 @@
     <string name="BList">黑名单模式</string>
     <string name="BTip">选中的部分将不被记录</string>
     <string name="Rules">自定义模式</string>
+    <string name="RTip">自定义规则</string>
     <string name="Github">[Github]  QuickLearn</string>
     <string name="QQ">QQ：2451802186这个是自动补全的QQ号，我也不知道是谁</string>
     <string name="Telegram">Telegram：@Kai0809v</string>
     <string name="information">作者联系方式：（邮箱）\nKai0809v@gamil.com</string>
-    <string name="Tip0">如果想要应用能够在后台稳定运行，建议在该应用的设置界面-耗电管理中，开启允许应用后台行为（耗电量很低的）</string>
+    <string name="Tip0">如果想要应用能够在后台稳定运行，\n建议在该应用的设置界面-耗电管理中，\n开启允许应用后台行为（耗电量很低的）</string>
     <string name="my_past">往事情怀酿做酒，换我余生长醉不复忧</string>
+    <string name="nothing">这里没有内容</string>
 </resources>

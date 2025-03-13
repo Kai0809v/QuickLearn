@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!-- 工具板，以后再做 -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -15,7 +17,28 @@
         android:id="@+id/recyclerViewNotifications"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_marginBottom="32dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    />
+    <!-- 无内容时展示的布局，也可以用这种方式实现添加背景 -->
+    <LinearLayout
+        android:id="@+id/no_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible">
+        <ImageView
+            android:layout_width="123dp"
+            android:layout_height="85dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_foreground" />
+        <TextView
+            android:id="@+id/no_id_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nothing" />
+    </LinearLayout>
 
     <!-- 子按钮容器 靠右下角分布，间距也是基于右下角的-->
     <LinearLayout
@@ -62,7 +85,7 @@
             app:srcCompat="@drawable/history_filter"
             app:elevation="6dp"/>
 
-        <!-- 子按钮4 -->
+        <!-- 子按钮4
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_child4"
             android:layout_width="wrap_content"
@@ -72,7 +95,7 @@
             app:tint="@android:color/white"
             app:srcCompat="@drawable/settings"
             app:elevation="6dp"/>
-
+        -->
         <!-- 子按钮5 -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_child5"
@@ -93,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
-        app:backgroundTint="#FF4081"
+        app:backgroundTint="?colorPrimary"
         app:tint="@android:color/white"
         app:srcCompat="@drawable/more"
         app:elevation="8dp"/>

@@ -5,13 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "notifications.db";
-    private static final int DB_VERSION = 2;// 数据库版本号
+    private static final String DB_NAME = "notifications.db";// 数据库名称
+    private static final int DB_VERSION = 1;// 数据库版本号
     //private final MutableLiveData<List<NotificationModel>> notificationsLiveData = new MutableLiveData<>();
 
     // 创建表语句
@@ -47,17 +49,27 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public long insertNotification(NotificationModel notification) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("package_name", notification.getPackageName());
-        values.put("app_name", notification.getAppName());
-        values.put("title",notification.getTitle());
-        values.put("content", notification.getContent());
-        values.put("timestamp", notification.getTimestamp());
-        long result = db.insert("notifications", null, values);
-        System.out.println("db:数据库插入");
-        db.close();
-        return result;
+        SQLiteDatabase db = null;
+        try {
+            db = getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("package_name", notification.getPackageName());
+            values.put("app_name", notification.getAppName());
+            values.put("title", notification.getTitle());
+            values.put("content", notification.getContent());
+            values.put("timestamp", notification.getTimestamp());
+            long result = db.insert("notifications", null, values);
+            System.out.println("db:数据库插入");
+            Log.d("DB", "插入结果：" + result); // 添加详细日志
+            return result;
+        } catch (Exception e) {
+            Log.e("DB", "插入异常: " + e.getMessage());
+            return -1;
+        } finally {
+            if (db != null) {
+                db.close(); // 确保关闭数据库连接
+            }
+        }
     }
 
     public List<NotificationModel> getAllNotifications() {

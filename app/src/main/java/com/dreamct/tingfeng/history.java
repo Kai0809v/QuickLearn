@@ -71,6 +71,14 @@ public class history extends AppCompatActivity {
             adapter.setNotifications(data);
             adapter.notifyDataSetChanged();
             System.out.println("观察到了变化");
+
+            // 添加空数据状态判断
+            View noItemView = findViewById(R.id.no_item);
+            if (data == null || data.isEmpty()) {
+                noItemView.setVisibility(View.VISIBLE);
+            } else {
+                noItemView.setVisibility(View.GONE);
+            }
         });
 
         // 初始化 RecyclerView
@@ -102,7 +110,7 @@ public class history extends AppCompatActivity {
         fabChild1 = findViewById(R.id.fab_child1);
         fabChild2 = findViewById(R.id.fab_child2);
         fabChild3 = findViewById(R.id.fab_child3);
-        fabChild4 = findViewById(R.id.fab_child4);
+        //fabChild4 = findViewById(R.id.fab_child4);
         fabChild5 = findViewById(R.id.fab_child5);
 
 
@@ -134,10 +142,10 @@ public class history extends AppCompatActivity {
             Huabing();
             //以后弄个筛选功能
         });
-        fabChild4.setOnClickListener(v -> {
-            Huabing();
-            //以后弄个自定义
-        });
+//        fabChild4.setOnClickListener(v -> {
+//            Huabing();
+//            //以后弄个自定义
+//        });
         fabChild5.setOnClickListener(v -> viewModel.loadNotifications());
     }
 
@@ -328,10 +336,6 @@ public class history extends AppCompatActivity {
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.notify(1, builder.build());
 
-    }
-
-    public NotificationDatabaseHelper getDbHelper() {
-        return dbHelper;
     }
 
     // 销毁广播接收器

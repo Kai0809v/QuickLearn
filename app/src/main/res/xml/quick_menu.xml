@@ -17,8 +17,8 @@
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
         android:shortcutId="manu2"
-        android:shortcutShortLabel="@string/func_2"
-        android:shortcutLongLabel="@string/func_2">
+        android:shortcutShortLabel="@string/inf"
+        android:shortcutLongLabel="@string/inf">
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.dreamct.tingfeng"

@@ -10,3 +10,5 @@ app:tint="?attr/colorAccent"
 - 可以轻松实现主题切换
 - 保持应用 UI 的一致性
 - 方便统一修改颜色方案
+
+android:layout_weight="1"，布局权重为1，会平分剩余空间。

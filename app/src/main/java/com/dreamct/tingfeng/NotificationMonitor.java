@@ -17,10 +17,16 @@ public class NotificationMonitor extends NotificationListenerService {
         super.onCreate();
         //dbHelper = new NotificationDatabaseHelper(this);
         TingFeng app = (TingFeng) getApplication();
+
+        // 确保每次服务创建时都获取最新的 ViewModel 实例
+        //app.initViewModelIfNeeded();
+
         viewModel = app.getSharedViewModel();
         viewModel.init(this);
-
+        System.out.println("服务已创建，ViewModel 初始化完成");
     }
+
+
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {

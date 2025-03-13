@@ -10,4 +10,9 @@ public class TingFeng extends Application {
         }
         return sharedViewModel;
     }
+    public void initViewModelIfNeeded() {
+        if (sharedViewModel == null) {
+            sharedViewModel = new NotificationViewModel();
+        }
+    }
 }

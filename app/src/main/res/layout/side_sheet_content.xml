@@ -4,30 +4,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="32dp"
+    android:id="@+id/side_sheet_root">
 
+    <ImageView
+        android:layout_width="123dp"
+        android:layout_height="85dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_foreground" />
     <TextView
         android:id="@+id/sidebar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+        android:layout_marginBottom="18dp"
         android:text="模态侧边栏内容"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
+
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
 
-    <Button
+
+
+    <com.google.android.material.button.MaterialButton
         style="@style/Widget.Material3.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="按钮1"
-        />
-    <Button
+        android:layout_marginBottom="16dp"/>
+
+    <com.google.android.material.button.MaterialButton
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:id="@+id/close_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="关闭"/>
+        android:text="关闭"
+        android:layout_marginBottom="16dp"/>
 
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/infButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:text="@string/inf"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="280dp"
+        android:text="沉浸式侧边栏暂时不知道怎么做,以后再来看看"
+        android:textSize="18dp" />
 </LinearLayout>

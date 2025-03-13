@@ -5,18 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <!-- 添加了一个空的 View 来作为图片和按钮之间的间隔
-    控件之间的间距也可以用这个 android:layout_marginBottom="16dp"
+    控件之间的间距最好用margin
+    android:layout_margin="
+    android:layout_marginBottom="16dp"
+    android:layout_marginTop=""
+    android:layout_marginStart=""
+    android:layout_marginEnd=""
     <View
         android:layout_width="match_parent"
         android:layout_height="32dp" />
     -->
+
+
     <!--侧边栏容器-->
-
-
-
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,16 +61,16 @@
         app:layout_constraintBottom_toTopOf="@id/relative_layout">
 
         <!-- Add your views inside the LinearLayout here -->
-        <!--还没有logo
+        <!--logo -->
         <ImageView
             android:id="@+id/logoImageView"
             android:layout_width="wrap_content"
-            android:layout_height="448dp"
-            android:layout_weight="1"
-            android:background="@color/white"
+            android:layout_height="128dp"
+
+
             android:scaleType="centerInside"
-            android:src="@drawable/logo" />
-        -->
+            android:src="@drawable/ic_launcher_foreground" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -86,14 +88,7 @@
             android:textSize="20sp"
             android:checked="false"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
 
-            android:backgroundTint="@color/button_background"
-            android:text="@string/func_2" />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button3"
             android:layout_width="wrap_content"
@@ -168,7 +163,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/fabRight"
+            android:id="@+id/fuchen"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -178,10 +173,10 @@
 
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="删除"
+            android:text="@string/delete"
             app:cornerRadius="16dp"
 
-            app:icon="@drawable/history_clear"
+            app:icon="@drawable/delete"
             app:iconGravity="textTop"
             app:iconPadding="8dp" />
     </RelativeLayout>
