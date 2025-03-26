@@ -35,8 +35,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
     public void deleteAllNotifications() {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("notifications", null, null); // 删除所有数据
-        //loadNotificationsAsync();
-        db.close();// 关闭数据库连接
+        //db.close();// 关闭数据库连接
     }
 
     @Override
@@ -67,7 +66,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
             return -1;
         } finally {
             if (db != null) {
-                db.close(); // 确保关闭数据库连接
+                //db.close(); // 确保关闭数据库连接
             }
         }
     }
@@ -88,7 +87,7 @@ public class NotificationDatabaseHelper extends SQLiteOpenHelper {
             list.add(item);
         }
         cursor.close();
-        db.close();
+        //db.close();
         return list;
     }
 

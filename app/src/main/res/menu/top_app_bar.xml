@@ -11,7 +11,7 @@
     <item
         android:id="@+id/topbar2"
         android:icon="@drawable/refresh"
-        android:title="不知道这个按钮在哪"
+        android:title="按钮2"
         android:contentDescription="暂时没有"
         app:showAsAction="ifRoom" />
 

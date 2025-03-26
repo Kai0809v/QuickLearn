@@ -1,4 +1,11 @@
 <resources>
+    <string-array name="func">
+        <item>历史记录</item>
+        <item>作者信息</item>
+        <item>点我试试</item>
+        <item>消息群发</item>
+    </string-array>
+
     <string name="app_name">听风</string>
     <string name="func_1">历史记录</string>
     <string name="inf">作者信息</string>

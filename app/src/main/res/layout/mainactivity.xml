@@ -33,7 +33,7 @@
             app:subtitle="副标题"
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/menu"
-            app:navigationIconTint="?colorAccent"/>
+            app:navigationIconTint="?attr/colorPrimary"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

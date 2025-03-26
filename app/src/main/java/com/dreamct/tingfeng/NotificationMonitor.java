@@ -1,15 +1,25 @@
 package com.dreamct.tingfeng;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
 
 public class NotificationMonitor extends NotificationListenerService {
     private static final String TAG = "NotificationMonitor";
     //private NotificationDatabaseHelper dbHelper;
+    private static final String CHANNEL_ID = "monitor";
     private NotificationViewModel viewModel;
 
     @Override
@@ -57,15 +67,46 @@ public class NotificationMonitor extends NotificationListenerService {
             notification.setContent(content);
             notification.setTimestamp(timestamp);
 
-            // 通知界面更新（通过广播）
-            //sendBroadcast(new Intent("NOTIFICATION_UPDATE"));
-
             //dbHelper.insertNotification(notification);//将数据存入数据库
             viewModel.insertNotification(notification); // 使用 ViewModel 插入数据,触发数据更新
             System.out.println("monitor:存入数据库");
+            Toast.makeText(this, "测试：已存入数据库", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.e(TAG, "处理通知错误: " + e.getMessage());
         }
+    }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null && "com.dreamct.tingfeng.ACTION_DB_TEST".equals(intent.getAction())) {
+            dbTest();
+        }
+        return START_STICKY;
+    }
+
+    public void dbTest(){
+        //NotificationDatabaseHelper dbHelper = new NotificationDatabaseHelper(this);
+        String appName = "听风";
+        String packageName = "com.dreamct.tingfeng";
+        String title ="数据库测试";
+        String content = "数据库测试";
+        long timestamp = System.currentTimeMillis();
+        NotificationModel testNotification = new NotificationModel();
+        testNotification.setAppName(appName);
+        testNotification.setPackageName(packageName);
+        testNotification.setTitle(title);
+        testNotification.setContent(content);
+        testNotification.setTimestamp(timestamp);
+        // 在后台线程插入数据
+        new Thread(() -> {
+            try {
+                viewModel.insertNotification(testNotification);
+                //dbHelper.insertNotification(testNotification);
+                System.out.println("测试数据已插入");
+            } catch (Exception e) {
+                Log.e(TAG, "插入测试数据失败: " + e.getMessage());
+            }
+        }).start();
+
     }
 
     private String getApplicationName(String packageName) {
@@ -94,11 +135,43 @@ public class NotificationMonitor extends NotificationListenerService {
 
     @Override
     public void onListenerConnected() {
+        super.onListenerConnected();
         // 服务连接时触发
+        System.out.println("通知监听服务已连接");
+        // 可以在这里添加初始化逻辑或通知界面更新
+        Toast.makeText(this, "通知监听服务已连接", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onListenerDisconnected() {
+        super.onListenerDisconnected();
         // 服务断开时触发
+        System.out.println("通知监听服务已断开");
+        // 可以在这里添加重连逻辑或提示用户
+        Toast.makeText(this, "通知监听服务已断开", Toast.LENGTH_SHORT).show();
     }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "通知监听服务",
+                    NotificationManager.IMPORTANCE_LOW
+            );
+            channel.setDescription("用于持续监听系统通知");
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+    }
+
+    /**创建通知*/
+    private Notification createNotification() {
+        return new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("通知监听服务")
+                .setContentText("正在监听系统通知")
+                .setSmallIcon(R.drawable.ic_launcher_foreground) // 替换为你的通知图标
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .build();
+    }
+
 }

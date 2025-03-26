@@ -139,8 +139,12 @@ public class history extends AppCompatActivity {
                     .show();
         });
         fabChild3.setOnClickListener(v -> {
-            Huabing();
-            //以后弄个筛选功能
+            Intent intent = new Intent(this, NotificationMonitor.class);
+            intent.setAction("com.dreamct.tingfeng.ACTION_DB_TEST");
+            startService(intent);
+
+            // 或者使用 ContextCompat 兼容低版本
+            //ContextCompat.startForegroundService(this, intent);
         });
 //        fabChild4.setOnClickListener(v -> {
 //            Huabing();

@@ -67,14 +67,24 @@ class MainActivity : ComponentActivity() {
         //val myButton2: Button = findViewById(R.id.button2)
         val myButton3: Button = findViewById(R.id.button3)
         val myButton4: Button = findViewById(R.id.button4)
-        val wenben = findViewById<TextView>(R.id.textView)
+        //val topAppBar.subtitle = findViewById<TextView>(R.id.textView)
 
 
         //val kaiguan: SwitchMaterial = findViewById(R.id.ListenSwitch)
         kaiguan = findViewById(R.id.ListenSwitch)
+        // 检查开关状态并启动服务
+        if (kaiguan.isChecked && isNotificationServiceEnabled()) {
+            val intent = Intent(this, NotificationMonitor::class.java)
+            startService(intent)
+
+        }
+
+
+
         updateSwitchState()
         val topAppBar = findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
-
+        topAppBar.subtitle ="---------"
+        // 检查开关状态并启动服务
         /**顶部导航栏,通过点击AppBar的导航图标来切换侧边栏*/
         topAppBar.setNavigationOnClickListener {
             // Handle navigation icon press
@@ -95,17 +105,17 @@ class MainActivity : ComponentActivity() {
 //        }
         myButton3.setOnClickListener {
             if (count < 7) {
-                wenben.text = mainTexts[count]
+                topAppBar.subtitle = mainTexts[count]
                 //count++
                 if (count == 5 || count == 6){
-                    wenben.textSize = 20F
+                    //topAppBar.subtitle = 20F
                 }else{
-                    wenben.textSize = 40f
+                    //topAppBar.subtitle.textSize = 40f
                 }
                 count++
             }else{
-                wenben.text = "初学阶段"
-                wenben.textSize = 40f
+                topAppBar.subtitle = "初学阶段"
+                //topAppBar.subtitle.textSize = 40f
                 count = 0
             }
         }
@@ -207,6 +217,16 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         // 每次返回界面时更新开关状态
         updateSwitchState()
+
+        // 添加服务启动检查
+//        if (kaiguan.isChecked && isNotificationServiceEnabled()) {
+//            val intent = Intent(this, NotificationMonitor::class.java)
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                startForegroundService(intent)
+//            } else {
+//                startService(intent)
+//            }
+//        }
     }
 
 
@@ -219,14 +239,14 @@ class MainActivity : ComponentActivity() {
 
 
     /**停止服务的方法（需要服务支持）*/
-    override fun stopService(intent: Intent): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //super.stopForegroundService(intent)
-            applicationContext.stopService(intent)
-        } else {
-            super.stopService(intent)
-        }
-    }
+//    override fun stopService(intent: Intent): Boolean {
+//        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            //super.stopForegroundService(intent)
+//            applicationContext.stopService(intent)
+//        } else {
+//            super.stopService(intent)
+//        }
+//    }
 
     /**引导用户授权通知访问权限*/
     private fun requestNotificationAccess() {
