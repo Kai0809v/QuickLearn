@@ -219,14 +219,14 @@ public class history extends AppCompatActivity {
                 .setMessage("用于发送测试通知，请允许权限")
                 .setPositiveButton("继续授权", (dialog, which) -> {
                     // 再次请求权限
-                    openNotificationSettings();
+                    shenQing();
                 })
                 .setNegativeButton("取消", null)
                 .show();
     }
     /**13+动态申请，低的跳转到通知设置页面*/
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void openNotificationSettings() {
+    private void shenQing() {
         Intent intent;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             // Android 13+ 可以直接请求权限

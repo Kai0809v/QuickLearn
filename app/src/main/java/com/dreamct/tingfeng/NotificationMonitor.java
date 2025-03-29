@@ -3,6 +3,8 @@ package com.dreamct.tingfeng;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -28,18 +30,14 @@ public class NotificationMonitor extends NotificationListenerService {
         //dbHelper = new NotificationDatabaseHelper(this);
         TingFeng app = (TingFeng) getApplication();
 
-        // 确保每次服务创建时都获取最新的 ViewModel 实例
-        //app.initViewModelIfNeeded();
-
         viewModel = app.getSharedViewModel();
         viewModel.init(this);
         System.out.println("服务已创建，ViewModel 初始化完成");
     }
 
-
-
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
+        // TODO:以后对通知进行过滤，只处理符合条件的通知
         try {
 
             // 获取包名
@@ -67,28 +65,48 @@ public class NotificationMonitor extends NotificationListenerService {
             notification.setContent(content);
             notification.setTimestamp(timestamp);
 
-            //dbHelper.insertNotification(notification);//将数据存入数据库
+            //dbHelper.insertNotification(notification);//将数据存入数据库，不触发数据更新
             viewModel.insertNotification(notification); // 使用 ViewModel 插入数据,触发数据更新
             System.out.println("monitor:存入数据库");
-            Toast.makeText(this, "测试：已存入数据库", Toast.LENGTH_SHORT).show();
+            // TODO:添加一个读取测试开关状态，仅在开关开启时输出测试信息
+            // Toast.makeText(this, "测试：已存入数据库", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.e(TAG, "处理通知错误: " + e.getMessage());
         }
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && "com.dreamct.tingfeng.ACTION_DB_TEST".equals(intent.getAction())) {
-            dbTest();
+        if (intent!= null) {
+            if ("com.dreamct.tingfeng.ACTION_DB_TEST".equals(intent.getAction())) {
+                dbTest();
+            }
+            if ("com.dreamct.tingfeng.ACTION_RESTART".equals(intent.getAction())) {
+                //restartService();
+                requestReconnect(this);
+            }
+            // 处理开关状态更新
+            if ("com.dreamct.tingfeng.ACTION_TOGGLE".equals(intent.getAction())) {
+                boolean enable = intent.getBooleanExtra("enable", false);
+                if (!enable) {
+                    stopSelf();
+                }
+            }
         }
         return START_STICKY;
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // 仅当开关关闭时才真正停止服务
+        //if (!viewModel.isServiceEnabled()) {
+            stopSelf();
+        //}
+    }
     public void dbTest(){
-        //NotificationDatabaseHelper dbHelper = new NotificationDatabaseHelper(this);
         String appName = "听风";
         String packageName = "com.dreamct.tingfeng";
         String title ="数据库测试";
-        String content = "数据库测试";
+        String content = "如果出现这个，说明数据库是正常的";
         long timestamp = System.currentTimeMillis();
         NotificationModel testNotification = new NotificationModel();
         testNotification.setAppName(appName);
@@ -100,7 +118,6 @@ public class NotificationMonitor extends NotificationListenerService {
         new Thread(() -> {
             try {
                 viewModel.insertNotification(testNotification);
-                //dbHelper.insertNotification(testNotification);
                 System.out.println("测试数据已插入");
             } catch (Exception e) {
                 Log.e(TAG, "插入测试数据失败: " + e.getMessage());
@@ -132,14 +149,16 @@ public class NotificationMonitor extends NotificationListenerService {
         }
         return "无文本内容";
     }
-
+    // 使用static变量来存储连接状态
+    public static boolean isConnected = false;
     @Override
     public void onListenerConnected() {
         super.onListenerConnected();
         // 服务连接时触发
-        System.out.println("通知监听服务已连接");
+
         // 可以在这里添加初始化逻辑或通知界面更新
         Toast.makeText(this, "通知监听服务已连接", Toast.LENGTH_SHORT).show();
+        isConnected = true;
     }
 
     @Override
@@ -149,8 +168,20 @@ public class NotificationMonitor extends NotificationListenerService {
         System.out.println("通知监听服务已断开");
         // 可以在这里添加重连逻辑或提示用户
         Toast.makeText(this, "通知监听服务已断开", Toast.LENGTH_SHORT).show();
+        isConnected = false;
+            //requestReconnect(this);
     }
-
+    // 直接重启服务（简单但可能过于激进）
+    private void restartService() {
+        Intent intent = new Intent(this, NotificationMonitor.class);
+        stopService(intent); // 先停止服务
+        startService(intent);
+        System.out.println("服务重连");
+    }
+    public static  void requestReconnect(Context context){
+        ComponentName componentName = new ComponentName(context, NotificationMonitor.class);
+        NotificationListenerService.requestRebind(componentName);
+    }
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(

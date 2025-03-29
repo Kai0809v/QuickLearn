@@ -1,16 +1,11 @@
 package com.dreamct.tingfeng
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
@@ -33,6 +28,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()//开启边缘到边缘Kotlin
         setContentView(R.layout.mainactivity)
 
@@ -76,7 +72,6 @@ class MainActivity : ComponentActivity() {
         if (kaiguan.isChecked && isNotificationServiceEnabled()) {
             val intent = Intent(this, NotificationMonitor::class.java)
             startService(intent)
-
         }
 
 
@@ -106,12 +101,12 @@ class MainActivity : ComponentActivity() {
         myButton3.setOnClickListener {
             if (count < 7) {
                 topAppBar.subtitle = mainTexts[count]
-                //count++
-                if (count == 5 || count == 6){
-                    //topAppBar.subtitle = 20F
-                }else{
-                    //topAppBar.subtitle.textSize = 40f
-                }
+
+//                if (count == 5 || count == 6){
+//                    //topAppBar.subtitle = 20F
+//                }else{
+//                    //topAppBar.subtitle.textSize = 40f
+//                }
                 count++
             }else{
                 topAppBar.subtitle = "初学阶段"
@@ -126,14 +121,14 @@ class MainActivity : ComponentActivity() {
         }
         val fuChen: Button = findViewById(R.id.fuchen)
 
+        /**删除数据库*/
         fuChen.setOnClickListener {
             MaterialAlertDialogBuilder(this)
                 .setTitle("删除数据库")
                 .setMessage("在数据库异常时才建议这么做，确定删除数据库吗？")
                 .setPositiveButton("确定") { _, _ ->
                     // 执行删除操作
-                    //此用于获取files目录下的文件
-                    // val path = "${filesDir.absolutePath}/notifications.db"
+                    //此用于获取files目录下的文件:val path = "${filesDir.absolutePath}/notifications.db"
                     val path = getDatabasePath("notifications.db").absolutePath
                     val file = File(path)
                     if (file.exists()) {
@@ -156,16 +151,24 @@ class MainActivity : ComponentActivity() {
         }
 
 
-
-
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.topbar1 -> {
-                    Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
+                    lianFou()
+                    //Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.topbar2 -> {
-                    Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
+                    //尝试通过按钮启动服务
+                    val intent = Intent(
+                        this,
+                        NotificationMonitor::class.java
+                    )
+                    intent.setAction("com.dreamct.tingfeng.ACTION_RESTART")
+                    startService(intent)
+
+                    NotificationMonitor.requestReconnect(this)
+                    //Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false
@@ -196,7 +199,12 @@ class MainActivity : ComponentActivity() {
         }
 
     }
-
+    /**检查服务状态*/
+    private fun lianFou(){
+        val status = if (NotificationMonitor.isConnected) "服务已连接" else "连接状态异常"
+//三元表达        val  status : String = "服务状态"+(isNotificationServiceEnabled()?"已开启":"未开启")
+        Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
+    }
     /**添加创建通知渠道的方法*/
 //    private fun createNotificationChannel() {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -235,7 +243,6 @@ class MainActivity : ComponentActivity() {
     private fun updateSwitchState() {
         kaiguan.isChecked = isNotificationServiceEnabled()
     }
-    /**删除数据库*/
 
 
     /**停止服务的方法（需要服务支持）*/
