@@ -6,6 +6,11 @@
         <item>消息群发</item>
     </string-array>
 
+    <string-array name="dev_texts">
+        <item>关闭开发者模式</item>
+        <item>打开开发者模式</item>
+    </string-array>
+
     <string name="app_name">听风</string>
     <string name="func_1">历史记录</string>
     <string name="inf">作者信息</string>
@@ -13,8 +18,13 @@
     <string name="func_4">消息群发</string>
     <string name="func_5">5未开发</string>
     <string name="func_6">6未开发</string>
+
+    <string name="re_request">重新申请</string>
+    <string name="stabilize">稳定运行</string>
     <string name="delete">删除数据库</string>
+    <string name="undefine">未定义</string>
     <string name="ListenSwitch">通知记录开关</string>
+
     <string name="mode">接收模式</string>
     <string name="WList">白名单模式</string>
     <string name="WTip">只记录选中的部分</string>
@@ -22,6 +32,9 @@
     <string name="BTip">选中的部分将不被记录</string>
     <string name="Rules">自定义模式</string>
     <string name="RTip">自定义规则</string>
+    <string name="oDev">打开开发者模式</string>
+
+
     <string name="Github">[Github]  QuickLearn</string>
     <string name="QQ">QQ：2451802186这个是自动补全的QQ号，我也不知道是谁</string>
     <string name="Telegram">Telegram：@Kai0809v</string>

@@ -163,7 +163,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/fuchen"
+            android:id="@+id/abandon"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -173,10 +173,10 @@
 
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="@string/delete"
+            android:text="@string/undefine"
             app:cornerRadius="16dp"
 
-            app:icon="@drawable/delete"
+            app:icon="@drawable/undefine"
             app:iconGravity="textTop"
             app:iconPadding="8dp" />
     </RelativeLayout>

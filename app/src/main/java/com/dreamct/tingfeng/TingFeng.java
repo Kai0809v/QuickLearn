@@ -15,4 +15,6 @@ public class TingFeng extends Application {
             sharedViewModel = new NotificationViewModel();
         }
     }
+    public static boolean SwitchState = false;
+    public static boolean devMode = false;
 }

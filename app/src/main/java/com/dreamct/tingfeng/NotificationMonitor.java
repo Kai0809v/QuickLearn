@@ -10,7 +10,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
@@ -37,7 +36,14 @@ public class NotificationMonitor extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        // TODO:以后对通知进行过滤，只处理符合条件的通知
+        if(TingFeng.SwitchState) {//(TingFeng.SwitchState == true)
+            // TODO:以后对通知进行过滤，只处理符合条件的通知
+            ting(sbn);
+        }
+
+    }
+    public void ting(StatusBarNotification sbn) {
+
         try {
 
             // 获取包名
@@ -99,8 +105,10 @@ public class NotificationMonitor extends NotificationListenerService {
         super.onDestroy();
         // 仅当开关关闭时才真正停止服务
         //if (!viewModel.isServiceEnabled()) {
+        if(!TingFeng.SwitchState){
             stopSelf();
-        //}
+            Toast.makeText(this, "服务已停止", Toast.LENGTH_SHORT).show();
+        }
     }
     public void dbTest(){
         String appName = "听风";
@@ -171,16 +179,11 @@ public class NotificationMonitor extends NotificationListenerService {
         isConnected = false;
             //requestReconnect(this);
     }
-    // 直接重启服务（简单但可能过于激进）
-    private void restartService() {
-        Intent intent = new Intent(this, NotificationMonitor.class);
-        stopService(intent); // 先停止服务
-        startService(intent);
-        System.out.println("服务重连");
-    }
-    public static  void requestReconnect(Context context){
+
+    public static void requestReconnect(Context context){
         ComponentName componentName = new ComponentName(context, NotificationMonitor.class);
         NotificationListenerService.requestRebind(componentName);
+        Toast.makeText(context, "尝试重连服务", Toast.LENGTH_SHORT).show();
     }
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

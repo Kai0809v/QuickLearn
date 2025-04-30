@@ -6,6 +6,7 @@ import android.provider.Settings
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
@@ -23,6 +24,10 @@ class MainActivity : ComponentActivity() {
     private val mainTexts: Array<String> by lazy {
         resources.getStringArray(R.array.ciku_texts)
     }
+    private val devTexts: Array<String> by lazy {
+        resources.getStringArray(R.array.dev_texts)
+    }
+
     //kotlin的数组中的元素也是从0开始的
     private lateinit var kaiguan: MaterialSwitch
 
@@ -119,10 +124,98 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this,InfActivity::class.java)
             startActivity(intent)
         }
-        val fuChen: Button = findViewById(R.id.fuchen)
 
-        /**删除数据库*/
-        fuChen.setOnClickListener {
+
+
+
+        topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.topbar1 -> {
+                    lianFou()
+                    //Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.topbar2 -> {
+                    //尝试通过按钮启动服务
+//                    val intent = Intent(
+//                        this,
+//                        NotificationMonitor::class.java
+//                    )
+//                    intent.setAction("com.dreamct.tingfeng.ACTION_RESTART")
+//                    startService(intent)
+
+                    NotificationMonitor.requestReconnect(this)
+                    //Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.fuchen -> {
+                    fuChen()
+                    true
+                }
+                R.id.re_request -> {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle("手动重新申请权限")
+                        .setMessage("由于作者不知道服务为什么会出现服务重连异常的情况，目前也没找到更好的解决办法，只有手动关闭再打开这个权限可以暂时解决，正在寻找根本的解决办法。")
+                        .setPositiveButton("去开启") { _, _ ->
+                            // 跳转到通知访问权限设置页面
+                            val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+                            startActivity(intent)
+                        }
+                        .setNegativeButton("取消", null)
+                        .show()
+                    true
+                }
+                R.id.dev ->{
+                    if(!TingFeng.devMode){
+                        TingFeng.devMode = true
+                        Toast.makeText(this, "开发者模式已开启", Toast.LENGTH_SHORT).show()
+                        menuItem.title = devTexts[0]
+                    }else{
+                        TingFeng.devMode = false
+                        Toast.makeText(this, "开发者模式已关闭", Toast.LENGTH_SHORT).show()
+                        menuItem.title = devTexts[1]
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+
+        /**通知记录服务开关*/
+        kaiguan.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // 检查是否已授权通知访问权限
+                if (!isNotificationServiceEnabled()) {
+                    // 调用引导用户授权的方法
+                    requestNotificationAccess()
+                    kaiguan.isChecked = isNotificationServiceEnabled()
+                }else {
+                    // 启动服务
+//                    val intent = Intent(this, NotificationMonitor::class.java)
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                        startForegroundService(intent)
+//                    } else {
+//                        startService(intent)
+//                    }
+                    Toast.makeText(this, "通知访问权限已开启", Toast.LENGTH_SHORT).show()
+                    TingFeng.SwitchState = true
+                }
+            } else {
+                TingFeng.SwitchState = false
+                // 停止服务（需要自定义逻辑）
+                //stopService(Intent(this, NotificationMonitor::class.java))
+            }
+        }
+
+    }
+    /**检查服务状态*/
+    private fun lianFou(){
+        val status = if (NotificationMonitor.isConnected) "服务已连接" else "连接状态异常"
+//三元表达        val  status : String = "服务状态"+(isNotificationServiceEnabled()?"已开启":"未开启")
+        Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
+    }
+    /**删除数据库*/
+    private fun fuChen(){
             MaterialAlertDialogBuilder(this)
                 .setTitle("删除数据库")
                 .setMessage("在数据库异常时才建议这么做，确定删除数据库吗？")
@@ -148,62 +241,6 @@ class MainActivity : ComponentActivity() {
                 }
                 .setNegativeButton("取消", null)
                 .show()
-        }
-
-
-        topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.topbar1 -> {
-                    lianFou()
-                    //Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.topbar2 -> {
-                    //尝试通过按钮启动服务
-                    val intent = Intent(
-                        this,
-                        NotificationMonitor::class.java
-                    )
-                    intent.setAction("com.dreamct.tingfeng.ACTION_RESTART")
-                    startService(intent)
-
-                    NotificationMonitor.requestReconnect(this)
-                    //Toast.makeText(this, "此功能还未开发", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                else -> false
-            }
-        }
-
-        /**通知记录服务开关*/
-        kaiguan.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                if (!isNotificationServiceEnabled()) {
-                    // 调用引导用户授权的方法
-                    requestNotificationAccess()
-                    updateSwitchState()
-                }else {
-                    // 启动服务
-//                    val intent = Intent(this, NotificationMonitor::class.java)
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                        startForegroundService(intent)
-//                    } else {
-//                        startService(intent)
-//                    }
-                    Toast.makeText(this, "通知访问权限已开启", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                // 停止服务（需要自定义逻辑）
-                //stopService(Intent(this, NotificationMonitor::class.java))
-            }
-        }
-
-    }
-    /**检查服务状态*/
-    private fun lianFou(){
-        val status = if (NotificationMonitor.isConnected) "服务已连接" else "连接状态异常"
-//三元表达        val  status : String = "服务状态"+(isNotificationServiceEnabled()?"已开启":"未开启")
-        Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
     }
     /**添加创建通知渠道的方法*/
 //    private fun createNotificationChannel() {
@@ -241,8 +278,10 @@ class MainActivity : ComponentActivity() {
 
     /**更新开关状态*/
     private fun updateSwitchState() {
-        kaiguan.isChecked = isNotificationServiceEnabled()
+        //if(isNotificationServiceEnabled()){}
+        kaiguan.isChecked =TingFeng.SwitchState
     }
+
 
 
     /**停止服务的方法（需要服务支持）*/
@@ -257,8 +296,6 @@ class MainActivity : ComponentActivity() {
 
     /**引导用户授权通知访问权限*/
     private fun requestNotificationAccess() {
-        // 检查权限是否已开启
-        if (!isNotificationServiceEnabled()) {
             // 如果未开启，弹出对话框提示用户去设置页面开启
             MaterialAlertDialogBuilder(this)
                 .setTitle("通知访问权限")
@@ -270,18 +307,12 @@ class MainActivity : ComponentActivity() {
                 }
                 .setNegativeButton("取消", null)
                 .show()
-        }
-//        else
-//        {
-//            Toast.makeText(this, "通知访问权限已开启", Toast.LENGTH_SHORT).show()
-//        }
+
+
     }
 
     /**检查通知访问权限是否已开启*/
     private fun isNotificationServiceEnabled(): Boolean {
-//        val packageName = packageName
-//        val flat = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
-//        return flat != null && flat.contains(packageName)
         val enabledListeners = NotificationManagerCompat.getEnabledListenerPackages(this)
         return enabledListeners.contains(packageName)
     }

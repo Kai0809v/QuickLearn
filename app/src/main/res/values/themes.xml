@@ -8,9 +8,20 @@
     全屏显示隐藏状态栏
     <item name="android:statusBarColor">@android:color/transparent</item>
     状态栏颜色透明
+
+    <item name="colorPrimary">#0DDC60</item>
+    自定义主主题色
+    <item name="colorOnPrimary">#2D2D2D</item>
+    自定义主主题色的文字颜色
+    <item name="colorPrimaryDark">#B8D4B6</item>
+    自定义暗主题色
     -->
     <style name="Theme.QuickLearn" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorAccent">#2196F3</item>
+
+        <item name="colorPrimary">#57965C</item>
+        <item name="colorSecondary">#E4EBE7</item>
+        <item name="colorPrimaryDark">#57965C</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:fitsSystemWindows">true</item>
 

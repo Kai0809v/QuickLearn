@@ -113,7 +113,10 @@ public class history extends AppCompatActivity {
         //fabChild4 = findViewById(R.id.fab_child4);
         fabChild5 = findViewById(R.id.fab_child5);
 
-
+        if(TingFeng.devMode){
+            LinearLayout devMenu = findViewById(R.id.test_menu);
+            devMenu.setVisibility(View.VISIBLE);
+        }
 
         fabMain.setOnClickListener(v -> toggleFab());
 
